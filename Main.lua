@@ -559,8 +559,7 @@ end
 ---@param UIEM_Message string 施法失败消息
 ---@param CMSFLP_SpellName string 施法失败消息
 ---@param CMSFLP_Message string 施法失败消息
-function OneMacro:SpellStatus_SpellCastFailure(id, name, rank, fullName, isActiveSpell, UIEM_Message,
-											   CMSFLP_SpellName, CMSFLP_Message)
+function OneMacro:SpellStatus_SpellCastFailure(id, name, rank, fullName, isActiveSpell, UIEM_Message, CMSFLP_SpellName, CMSFLP_Message)
 	self:EventReport("CastFailure", name, {
 		SpellName = name,
 	})
@@ -574,8 +573,7 @@ end
 ---@param castStartTime number 施法开始时间
 ---@param castStopTime number 施法结束时间
 ---@param castDuration number 施法持续时间
-function OneMacro:SpellStatus_SpellCastCastingStart(id, name, rank, fullName, castStartTime, castStopTime,
-													castDuration)
+function OneMacro:SpellStatus_SpellCastCastingStart(id, name, rank, fullName, castStartTime, castStopTime, castDuration)
 	self:EventReport("CastCastingStart", name, {
 		SpellName = name,
 	})
@@ -591,8 +589,7 @@ end
 ---@param castDuration number 施法持续时间
 ---@param castDelay number 施法延迟
 ---@param castDelayTotal number 施法总延迟
-function OneMacro:SpellStatus_SpellCastCastingChange(id, name, rank, fullName, castStartTime, castStopTime,
-													 castDuration, castDelay, castDelayTotal)
+function OneMacro:SpellStatus_SpellCastCastingChange(id, name, rank, fullName, castStartTime, castStopTime, castDuration, castDelay, castDelayTotal)
 	self:EventReport("CastCastingChange", name, {
 		SpellName = name,
 	})
@@ -607,8 +604,7 @@ end
 ---@param castStopTime number 施法结束时间
 ---@param castDuration number 施法持续时间
 ---@param castDelayTotal number 施法总延迟
-function OneMacro:SpellStatus_SpellCastCastingFinish(id, name, rank, fullName, castStartTime, castStopTime,
-													 castDuration, castDelayTotal)
+function OneMacro:SpellStatus_SpellCastCastingFinish(id, name, rank, fullName, castStartTime, castStopTime, castDuration, castDelayTotal)
 	self:EventReport("CastCastingFinish", name, {
 		SpellName = name,
 	})
@@ -623,8 +619,7 @@ end
 ---@param castStopTime number 施法结束时间
 ---@param castDuration number 施法持续时间
 ---@param action number 施法动作
-function OneMacro:SpellStatus_SpellCastChannelingStart(id, name, rank, fullName, castStartTime, castStopTime,
-													   castDuration, action)
+function OneMacro:SpellStatus_SpellCastChannelingStart(id, name, rank, fullName, castStartTime, castStopTime, castDuration, action)
 	self:EventReport("CastChannelingStart", name, {
 		SpellName = name,
 	})
@@ -641,8 +636,7 @@ end
 ---@param action number 施法动作
 ---@param castDisruption number 施法中断
 ---@param castDisruptionTotal number 施法总中断
-function OneMacro:SpellStatus_SpellCastChannelingChange(id, name, rank, fullName, castStartTime, castStopTime,
-														castDuration, action, castDisruption, castDisruptionTotal)
+function OneMacro:SpellStatus_SpellCastChannelingChange(id, name, rank, fullName, castStartTime, castStopTime, castDuration, action, castDisruption, castDisruptionTotal)
 	self:EventReport("CastChannelingChange", name, {
 		SpellName = name,
 	})
@@ -658,8 +652,7 @@ end
 ---@param castDuration number 施法持续时间
 ---@param action number 施法动作
 ---@param castDisruptionTotal number 施法总中断
-function OneMacro:SpellStatus_SpellCastChannelingFinish(id, name, rank, fullName, castStartTime, castStopTime,
-														castDuration, action, castDisruptionTotal)
+function OneMacro:SpellStatus_SpellCastChannelingFinish(id, name, rank, fullName, castStartTime, castStopTime, castDuration, action, castDisruptionTotal)
 	self:EventReport("CastChannelingFinish", name, {
 		SpellName = name,
 	})
