@@ -1939,6 +1939,6 @@ function OneMacroEditor:OnShowReadmeEditBox()
 		"邮箱：" .. OneMacro.email,
 		"网站：" .. OneMacro.website,
 		"",
-		"如有建议或错误请至 https://gitee.com/ku-ba/OneMacro 反馈！"
+		"如有建议或错误请至 https://gitee.com/ku-ba/OneMacro/issues 反馈！"
 	}, "\n"))
 end

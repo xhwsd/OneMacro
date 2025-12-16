@@ -79,8 +79,7 @@ function OneMacroCommon:RegisterWeights()
 					return kind and 0 or 1
 				elseif OneMacroRoster:isUnit(unit) then
 					-- 名单单位
-					local success, kind = OneMacroRoster:SwitchTarget(unit, { Buff, "FindUnit" }, options.buff,
-						"target")
+					local success, kind = OneMacroRoster:SwitchTarget(unit, { Buff, "FindUnit" }, options.buff, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return 0
@@ -110,8 +109,7 @@ function OneMacroCommon:RegisterWeights()
 					return kind and 1 or 0
 				elseif OneMacroRoster:isUnit(unit) then
 					-- 名单单位
-					local success, kind = OneMacroRoster:SwitchTarget(unit, { Buff, "FindUnit" }, options.buff,
-						"target")
+					local success, kind = OneMacroRoster:SwitchTarget(unit, { Buff, "FindUnit" }, options.buff, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return 0
@@ -155,8 +153,7 @@ function OneMacroCommon:RegisterDetects()
 					return health
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, health = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealth" },
-						"target")
+					local success, health = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealth" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, health)
 						return
@@ -192,8 +189,7 @@ function OneMacroCommon:RegisterDetects()
 					return max
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, message, max = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealth" },
-						"target")
+					local success, message, max = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealth" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, message)
 						return
@@ -229,8 +225,7 @@ function OneMacroCommon:RegisterDetects()
 					return percentage
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, percentage = OneMacroRoster:SwitchTarget(options.unit,
-						{ State, "GetHealthPercentage" }, "target")
+					local success, percentage = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealthPercentage" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return
@@ -266,8 +261,7 @@ function OneMacroCommon:RegisterDetects()
 					return lose
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, lose = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealthLose" },
-						"target")
+					local success, lose = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealthLose" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, lose)
 						return
@@ -303,8 +297,7 @@ function OneMacroCommon:RegisterDetects()
 					return percentage
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, percentage = OneMacroRoster:SwitchTarget(options.unit,
-						{ State, "GetHealthLosePercentage" }, "target")
+					local success, percentage = OneMacroRoster:SwitchTarget(options.unit, { State, "GetHealthLosePercentage" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return
@@ -340,8 +333,7 @@ function OneMacroCommon:RegisterDetects()
 					return mana
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, mana = OneMacroRoster:SwitchTarget(options.unit, { State, "GetMana" },
-						options.unit)
+					local success, mana = OneMacroRoster:SwitchTarget(options.unit, { State, "GetMana" }, options.unit)
 					if success == false then
 						OneMacro:DebugError(3, mana)
 						return
@@ -377,8 +369,7 @@ function OneMacroCommon:RegisterDetects()
 					return max
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, message, max = OneMacroRoster:SwitchTarget(options.unit, { State, "GetMana" },
-						options.unit)
+					local success, message, max = OneMacroRoster:SwitchTarget(options.unit, { State, "GetMana" }, options.unit)
 					if success == false then
 						OneMacro:DebugError(3, message)
 						return
@@ -414,8 +405,7 @@ function OneMacroCommon:RegisterDetects()
 					return percentage
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, percentage = OneMacroRoster:SwitchTarget(options.unit,
-						{ State, "GetManaPercentage" }, "target")
+					local success, percentage = OneMacroRoster:SwitchTarget(options.unit, { State, "GetManaPercentage" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return
@@ -451,8 +441,7 @@ function OneMacroCommon:RegisterDetects()
 					return lose
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, lose = OneMacroRoster:SwitchTarget(options.unit, { State, "GetManaLose" },
-						"target")
+					local success, lose = OneMacroRoster:SwitchTarget(options.unit, { State, "GetManaLose" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, lose)
 						return
@@ -488,8 +477,7 @@ function OneMacroCommon:RegisterDetects()
 					return percentage
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, percentage = OneMacroRoster:SwitchTarget(options.unit,
-						{ State, "GetManaLosePercentage" }, "target")
+					local success, percentage = OneMacroRoster:SwitchTarget(options.unit, { State, "GetManaLosePercentage" }, "target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
 						return
@@ -562,8 +550,7 @@ function OneMacroCommon:RegisterDetects()
 					return energy
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, energy = OneMacroRoster:SwitchTarget(options.unit, { State, "GetEnergy" },
-						options.unit)
+					local success, energy = OneMacroRoster:SwitchTarget(options.unit, { State, "GetEnergy" }, options.unit)
 					if success == false then
 						OneMacro:DebugError(3, energy)
 						return
@@ -607,8 +594,7 @@ function OneMacroCommon:RegisterDetects()
 					return Buff:FindUnit(options.buff, unit) ~= nil
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, kind = OneMacroRoster:SwitchTarget(options.unit, { Buff, "FindUnit" },
-						options.buff, "target")
+					local success, kind = OneMacroRoster:SwitchTarget(options.unit, { Buff, "FindUnit" }, options.buff, "target")
 					if success == false then
 						OneMacro:DebugError(3, kind)
 						return
@@ -649,8 +635,7 @@ function OneMacroCommon:RegisterDetects()
 					return layers
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, layers = OneMacroRoster:SwitchTarget(options.unit, { Buff, "GetLayers" },
-						options.buff, "target")
+					local success, layers = OneMacroRoster:SwitchTarget(options.unit, { Buff, "GetLayers" }, options.buff, "target")
 					if success == false then
 						OneMacro:DebugError(3, layers)
 						return
@@ -691,8 +676,7 @@ function OneMacroCommon:RegisterDetects()
 					return Buff:GetLevel(options.buff, unit)
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, level = OneMacroRoster:SwitchTarget(options.unit, { Buff, "GetLevel" },
-						options.buff, "target")
+					local success, level = OneMacroRoster:SwitchTarget(options.unit, { Buff, "GetLevel" }, options.buff, "target")
 					if success == false then
 						OneMacro:DebugError(3, level)
 						return

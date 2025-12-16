@@ -161,8 +161,7 @@ function OneMacroHeal:RegisterDetects()
 					return self:CanHeal(unit, options.sight)
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, heal = OneMacroRoster:SwitchTarget(options.unit, { self, "CanHeal" }, "target",
-						options.sight)
+					local success, heal = OneMacroRoster:SwitchTarget(options.unit, { self, "CanHeal" }, "target", options.sight)
 					if success == false then
 						OneMacro:DebugError(3, heal)
 						return
@@ -208,8 +207,7 @@ function OneMacroHeal:RegisterDetects()
 					return Heal:CountEarlier(unit, options.time)
 				elseif OneMacroRoster:isUnit(options.unit) then
 					-- 名单单位
-					local success, result = OneMacroRoster:SwitchTarget(options.unit, { Heal, "CountEarlier" }, "target",
-						options.time)
+					local success, result = OneMacroRoster:SwitchTarget(options.unit, { Heal, "CountEarlier" }, "target", options.time)
 					if success == false then
 						OneMacro:DebugError(3, result)
 						return
