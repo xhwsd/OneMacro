@@ -1,0 +1,259 @@
+<Ui
+	xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+	<Script file="Roster.lua" />
+
+	<!-- 项按钮模板 -->
+	<Button name="OneMacroRosterItemButtonTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<NormalText name="$parentNameText" inherits="GameFontNormalSmall" justifyH="LEFT" text="Assistant">
+			<Size>
+				<AbsDimension x="150" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPRIGHT" />
+			</Anchors>
+		</NormalText>
+		<Scripts>
+			<OnShow>
+				this.update = true
+			</OnShow>
+			<OnUpdate>
+				if this.update then
+					this.update = false
+					OneMacroRoster:OnUpdateItemButton()
+				end
+			</OnUpdate>
+			<OnEnter>
+				OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+				OneMacroTooltip:ClearLines()
+				OneMacroTooltip:SetText("左键移出名单")
+				OneMacroTooltip:Show()
+			</OnEnter>
+			<OnLeave>
+				OneMacroTooltip:Hide()
+			</OnLeave>
+			<OnClick>
+				OneMacroRoster:OnClickItemButton()
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- 框架 -->
+	<Frame name="OneMacroRosterFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="150" y="230" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<TitleRegion setAllPoints="true" />
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5" />
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentText" inherits="GameFontNormal" text="一键宏/名单">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- 清空按钮 -->
+			<Button name="$parentClearButton" inherits="OneMacroButtonTemplate1" text="清空">
+				<Size>
+					<AbsDimension x="40" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "清空名单所有"
+					</OnLoad>
+					<OnClick>
+						OneMacroRoster:OnClickClearButton()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- 关闭按钮 -->
+			<Button name="$parentCloseButton" inherits="OneMacroButtonTemplate1" text="关闭">
+				<Size>
+					<AbsDimension x="40" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parentClearButton" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "关闭窗口"
+					</OnLoad>
+					<OnClick>
+						OneMacroRosterFrame:Hide()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- 加入按钮 -->
+			<Button name="$parentJoinButton" inherits="OneMacroButtonTemplate1" text="加入">
+				<Size>
+					<AbsDimension x="40" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="$parentClearButton" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "将友善目标加入名单"
+					</OnLoad>
+					<OnClick>
+						OneMacroRoster:OnClickJoinButton()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- 上移按钮 -->
+			<Button name="$parentUpButton" inherits="OneMacroButtonTemplate1" text="上移">
+				<Size>
+					<AbsDimension x="40" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="5" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "上移一项"
+					</OnLoad>
+					<OnClick>
+						OneMacroRosterFrame.offset = OneMacroRosterFrame.offset - 1
+						OneMacroRosterFrame.update = true
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- 下移按钮 -->
+			<Button name="$parentDownButton" inherits="OneMacroButtonTemplate1" text="下移">
+				<Size>
+					<AbsDimension x="40" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-5" y="5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "下移一项"
+					</OnLoad>
+					<OnClick>
+						OneMacroRosterFrame.offset = OneMacroRosterFrame.offset + 1
+						OneMacroRosterFrame.update = true
+					</OnClick>
+				</Scripts>
+			</Button>
+			
+			<!-- 项按钮 -->
+			<Button name="$parentItemButton1" inherits="OneMacroRosterItemButtonTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-40" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton2" inherits="OneMacroRosterItemButtonTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton1" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton3" inherits="OneMacroRosterItemButtonTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton2" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton4" inherits="OneMacroRosterItemButtonTemplate" id="4">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton3" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton5" inherits="OneMacroRosterItemButtonTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton4" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton6" inherits="OneMacroRosterItemButtonTemplate" id="6">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton5" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton7" inherits="OneMacroRosterItemButtonTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton6" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton8" inherits="OneMacroRosterItemButtonTemplate" id="8">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton7" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton9" inherits="OneMacroRosterItemButtonTemplate" id="9">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton8" />
+				</Anchors>
+			</Button>
+			<Button name="$parentItemButton10" inherits="OneMacroRosterItemButtonTemplate" id="10">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parentItemButton9" />
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this.offset = 0
+			</OnLoad>
+			<OnShow>
+				this.update = true
+				OneMacroRoster:OnShowFrame()
+			</OnShow>
+			<OnHide>
+				OneMacroRoster:OnHideFrame()
+			</OnHide>
+			<OnUpdate>
+				if this.update then
+					this.update = false
+					OneMacroRoster:OnUpdateFrame()
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>

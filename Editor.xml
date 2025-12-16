@@ -1,0 +1,3113 @@
+<Ui
+	xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+	<Script file="Editor.lua" />
+
+	<!-- 策略列表项模板 -->
+	<Button name="OneMacroEditorStrategyListItemTemplate" virtual="true" hidden="true" text="">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentTag" inherits="GameFontNormal" justifyH="RIGHT" text="">
+					<Size>
+						<AbsDimension x="80" y="16" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				OneMacroEditor:OnLoadStrategyListItem()
+			</OnLoad>
+			<OnClick>
+				OneMacroEditor:OnClickStrategyListItem()			
+			</OnClick>
+			<OnEnter>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+					OneMacroTooltip:ClearLines()
+					OneMacroTooltip:SetText(this.tooltip)
+					OneMacroTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+		<!-- 常规纹理 -->
+		<NormalTexture file="Interface\Buttons\UI-MinusButton-UP">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<!-- 高亮纹理 -->
+		<HighlightTexture file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+		<!-- 常规文本 -->
+		<NormalText inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors> 
+		</NormalText>
+		<!-- 高亮文本 -->
+		<HighlightText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightText>
+		<!-- 禁用文本 -->
+		<DisabledText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</DisabledText>
+	</Button>
+	
+	<!-- 权重列表项模板 -->
+	<Button name="OneMacroEditorWeightListItemTemplate" virtual="true" hidden="true" text="">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentTag" inherits="GameFontNormal" justifyH="RIGHT" text="">
+					<Size>
+						<AbsDimension x="80" y="16" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				OneMacroEditor:OnLoadWeightListItem()
+			</OnLoad>
+			<OnClick>
+				OneMacroEditor:OnClickWeightListItem()			
+			</OnClick>
+			<OnEnter>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+					OneMacroTooltip:ClearLines()
+					OneMacroTooltip:SetText(this.tooltip)
+					OneMacroTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+		<!-- 常规纹理 -->
+		<NormalTexture file="Interface\Buttons\UI-MinusButton-UP">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<!-- 高亮纹理 -->
+		<HighlightTexture file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+		<!-- 常规文本 -->
+		<NormalText inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors> 
+		</NormalText>
+		<!-- 高亮文本 -->
+		<HighlightText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightText>
+		<!-- 禁用文本 -->
+		<DisabledText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</DisabledText>
+	</Button>
+	
+	<!-- 检测列表项模板 -->
+	<Button name="OneMacroEditorDetectListItemTemplate" virtual="true" hidden="true" text="">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentTag" inherits="GameFontNormal" justifyH="RIGHT" text="">
+					<Size>
+						<AbsDimension x="80" y="16" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				OneMacroEditor:OnLoadDetectListItem()
+			</OnLoad>
+			<OnClick>
+				OneMacroEditor:OnClickDetectListItem()			
+			</OnClick>
+			<OnEnter>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+					OneMacroTooltip:ClearLines()
+					OneMacroTooltip:SetText(this.tooltip)
+					OneMacroTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+		<!-- 常规纹理 -->
+		<NormalTexture file="Interface\Buttons\UI-MinusButton-UP">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<!-- 高亮纹理 -->
+		<HighlightTexture file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+		<!-- 常规文本 -->
+		<NormalText inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors> 
+		</NormalText>
+		<!-- 高亮文本 -->
+		<HighlightText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightText>
+		<!-- 禁用文本 -->
+		<DisabledText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</DisabledText>
+	</Button>
+
+	<!-- 动作列表项模板 -->
+	<Button name="OneMacroEditorActionListItemTemplate" virtual="true" hidden="true" text="">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentTag" inherits="GameFontNormal" justifyH="RIGHT" text="">
+					<Size>
+						<AbsDimension x="80" y="16" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				OneMacroEditor:OnLoadActionListItem()
+			</OnLoad>
+			<OnClick>
+				OneMacroEditor:OnClickActionListItem()			
+			</OnClick>
+			<OnEnter>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+					OneMacroTooltip:ClearLines()
+					OneMacroTooltip:SetText(this.tooltip)
+					OneMacroTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave>
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+		<!-- 常规纹理 -->
+		<NormalTexture file="Interface\Buttons\UI-MinusButton-UP">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<!-- 高亮纹理 -->
+		<HighlightTexture file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+		<!-- 常规文本 -->
+		<NormalText inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors> 
+		</NormalText>
+		<!-- 高亮文本 -->
+		<HighlightText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightText>
+		<!-- 禁用文本 -->
+		<DisabledText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</DisabledText>
+	</Button>
+
+	<!-- 通报列表项模板 -->
+	<Button name="OneMacroEditorReportListItemTemplate" virtual="true" hidden="true" text="">
+		<Size>
+			<AbsDimension x="150" y="16" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentTag" inherits="GameFontNormal" justifyH="RIGHT" text="">
+					<Size>
+						<AbsDimension x="80" y="16" />
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				OneMacroEditor:OnLoadReportListItem()
+			</OnLoad>
+			<OnClick>
+				OneMacroEditor:OnClickReportListItem()			
+			</OnClick>
+			<OnEnter>
+				-- 显示提示
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+					OneMacroTooltip:ClearLines()
+					OneMacroTooltip:SetText(this.tooltip)
+					OneMacroTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave>
+				-- 隐藏提示
+				if type(this.tooltip) == "string" and this.tooltip ~= "" then
+					OneMacroTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+		<!-- 常规纹理 -->
+		<NormalTexture file="Interface\Buttons\UI-MinusButton-UP">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<!-- 高亮纹理 -->
+		<HighlightTexture file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="16" y="16" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="3" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+		<!-- 常规文本 -->
+		<NormalText inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors> 
+		</NormalText>
+		<!-- 高亮文本 -->
+		<HighlightText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightText>
+		<!-- 禁用文本 -->
+		<DisabledText inherits="GameFontHighlight" justifyH="LEFT" nonspacewrap="true">
+			<Size>
+				<AbsDimension x="275" y="10" />
+			</Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset>
+						<AbsDimension x="20" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</DisabledText>
+	</Button>
+
+	<!-- 操作列表项模板 -->
+	<Frame name="OneMacroEditorOperationListItemTemplate" inherits="OneMacroGroupBoxTemplate1" virtual="true" hidden="true">
+		<Size>
+			<AbsDimension x="500" y="120" />
+		</Size>
+		<Frames>
+			<Frame name="$parentNameLabel" inherits="OneMacroLabelTemplate1">
+				<Size>
+					<AbsDimension x="60" y="32" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="15" y="-10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName() .. "Text"):SetText("动作")
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<Frame name="$parentNameComboBox" inherits="OneMacroComboBoxTemplate1">
+				<Size>
+					<AbsDimension x="40" y="32" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentNameLabel" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-45" y="-2" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<Frame name="$parentRemarkLabel" inherits="OneMacroLabelTemplate1">
+				<Size>
+					<AbsDimension x="60" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentNameLabel" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName() .. "Text"):SetText("备注")
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<EditBox name="$parentRemarkEditBox" inherits="OneMacroEditBoxTemplate1">
+				<Size x="150" y="20" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentRemarkLabel" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-23" y="-1" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+
+			<CheckButton name="$parentDisableCheckBox" inherits="OneMacroCheckBoxTemplate1" text="禁用">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentRemarkLabel" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="-3" y="-8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<!-- 重置按钮 -->
+			<Button name="$parentResetButton" inherits="OneMacroButtonTemplate1" text="重置">
+				<Size>
+					<AbsDimension x="50" y="30" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentDisableCheckBox" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="35" y="-1" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "重置操作"
+					</OnLoad>
+					<OnClick>
+						OneMacroEditor:OnClickOperationResetButton()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- 保存按钮 -->
+			<Button name="$parentSaveButton" inherits="OneMacroButtonTemplate1" text="保存">
+				<Size>
+					<AbsDimension x="50" y="30" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentResetButton" relativePoint="TOPRIGHT" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "保存操作"
+					</OnLoad>
+					<OnClick>
+						OneMacroEditor:OnClickOperationSaveButton()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<Button name="$parentDeleteButton" inherits="OneMacroButtonTemplate1" text="删除">
+				<Size>
+					<AbsDimension x="50" y="30" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSaveButton" relativePoint="TOPRIGHT" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this.tooltip = "删除操作"
+					</OnLoad>
+					<OnClick>
+						OneMacroEditor:OnClickOperationDeleteButton()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+			<EditBox name="$parentOptionEditBox1" inherits="OneMacroEditBoxTemplate1">
+				<Size x="150" y="20" />
+				<Anchors>
+					<Anchor point="TOP" relativePoint="TOP">
+						<Offset>
+							<AbsDimension y="-20" />
+						</Offset>
+					</Anchor>
+					<Anchor point="RIGHT">
+						<Offset>
+							<AbsDimension x="-20" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+
+			<Frame name="$parentOptionLabel1" inherits="OneMacroLabelTemplate1">
+				<Size>
+					<AbsDimension x="60" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentOptionEditBox1" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName() .. "Text"):SetText("选项1")
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<EditBox name="$parentOptionEditBox2" inherits="OneMacroEditBoxTemplate1">
+				<Size x="150" y="20" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentOptionEditBox1" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension y="-10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+
+			<Frame name="$parentOptionLabel2" inherits="OneMacroLabelTemplate1">
+				<Size>
+					<AbsDimension x="60" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentOptionEditBox2" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName() .. "Text"):SetText("选项2")
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<EditBox name="$parentOptionEditBox3" inherits="OneMacroEditBoxTemplate1">
+				<Size x="150" y="20" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentOptionEditBox2" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+
+			<Frame name="$parentOptionLabel3" inherits="OneMacroLabelTemplate1">
+				<Size>
+					<AbsDimension x="60" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentOptionEditBox3" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName() .. "Text"):SetText("选项3")
+					</OnLoad>
+				</Scripts>
+			</Frame>
+		</Frames>
+	</Frame>
+
+	<!-- 框架 -->
+	<Frame name="OneMacroEditorFrame" toplevel="true" movable="true" enableMouse="true" hidden="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="800" y="500" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="356" y="64" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension y="12" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="一键宏/编辑器">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHeaderTexture">
+							<Offset>
+								<AbsDimension y="-14" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- 拖动框架 -->
+			<Frame name="$parentDragFrame">
+				<Size>
+					<AbsDimension x="160" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" />
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						if arg1 == "LeftButton" then
+							-- 隐藏选择中选项卡，提升拖动流畅性
+							local tabId = PanelTemplates_GetSelectedTab(this:GetParent())
+							getglobal(this:GetParent():GetName() .. "TabFrame" .. tabId):Hide()
+							this:GetParent():StartMoving()
+						end
+					</OnMouseDown>
+					<OnMouseUp>
+						-- 显示选择中选项卡
+						local tabId = PanelTemplates_GetSelectedTab(this:GetParent())
+						getglobal(this:GetParent():GetName() .. "TabFrame" .. tabId):Show()
+						this:GetParent():StopMovingOrSizing()
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+
+			<!-- 关闭按钮 -->
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						OneMacroTooltip:SetOwner(this, "ANCHOR_TOPRIGHT")
+						OneMacroTooltip:ClearLines()
+						OneMacroTooltip:SetText("关闭窗口")
+						OneMacroTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						OneMacroTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+			</Button>
+
+			<!-- 策略/选择夹框架1 -->
+			<Frame name="$parentTabFrame1" inherits="OneMacroTabFrameTemplate1" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="15" y="-35" />
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-15" y="15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<!-- 左分组框 -->
+					<Frame name="$parentLeftGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="220" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<!-- 新增按钮 -->
+							<Button name="$parentNewButton" inherits="OneMacroButtonTemplate1" text="新增">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-5" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "新增策略"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickStrategyNewButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 清空按钮 -->
+							<Button name="$parentClearButton" inherits="OneMacroButtonTemplate1" text="清空">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentNewButton" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "清空策略"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickStrategyClearButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 导入按钮 -->
+							<Button name="$parentImportButton" inherits="OneMacroButtonTemplate1" text="导入">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentClearButton" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "导入策略"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickStrategyImportButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 导出按钮 -->
+							<Button name="$parentExportButton" inherits="OneMacroButtonTemplate1" text="导出">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentImportButton" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "导出策略"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickStrategyExportButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 策略列表框 -->
+							<ScrollFrame name="$parentStrategyListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentNewButton" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="-5" y="-1" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										ScrollFrame_OnLoad()
+										OneMacroEditor:OnLoadStrategyListBox()
+									</OnLoad>
+									<OnShow>
+										OneMacroEditor:OnShowStrategyListBox()
+									</OnShow>
+									<OnVerticalScroll>
+										OneMacroEditor:OnVerticalScrollStrategyListBox()
+									</OnVerticalScroll>
+								</Scripts>
+							</ScrollFrame>
+
+							<!-- 策略列表项 -->
+							<Button name="$parentStrategyListItem1" inherits="OneMacroEditorStrategyListItemTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListBox" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="1" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem2" inherits="OneMacroEditorStrategyListItemTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem1" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem3" inherits="OneMacroEditorStrategyListItemTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem2" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem4" inherits="OneMacroEditorStrategyListItemTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem3" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem5" inherits="OneMacroEditorStrategyListItemTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem4" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem6" inherits="OneMacroEditorStrategyListItemTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem5" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem7" inherits="OneMacroEditorStrategyListItemTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem6" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem8" inherits="OneMacroEditorStrategyListItemTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem7" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem9" inherits="OneMacroEditorStrategyListItemTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem8" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem10" inherits="OneMacroEditorStrategyListItemTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem9" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem11" inherits="OneMacroEditorStrategyListItemTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem10" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem12" inherits="OneMacroEditorStrategyListItemTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem11" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem13" inherits="OneMacroEditorStrategyListItemTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem12" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem14" inherits="OneMacroEditorStrategyListItemTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem13" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem15" inherits="OneMacroEditorStrategyListItemTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem14" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem16" inherits="OneMacroEditorStrategyListItemTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem15" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem17" inherits="OneMacroEditorStrategyListItemTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem16" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem18" inherits="OneMacroEditorStrategyListItemTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem17" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem19" inherits="OneMacroEditorStrategyListItemTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem18" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem20" inherits="OneMacroEditorStrategyListItemTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem19" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem21" inherits="OneMacroEditorStrategyListItemTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem20" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem22" inherits="OneMacroEditorStrategyListItemTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem21" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem23" inherits="OneMacroEditorStrategyListItemTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem22" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem24" inherits="OneMacroEditorStrategyListItemTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem23" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem25" inherits="OneMacroEditorStrategyListItemTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem24" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem26" inherits="OneMacroEditorStrategyListItemTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem25" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem27" inherits="OneMacroEditorStrategyListItemTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem26" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem28" inherits="OneMacroEditorStrategyListItemTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem27" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem29" inherits="OneMacroEditorStrategyListItemTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem28" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentStrategyListItem30" inherits="OneMacroEditorStrategyListItemTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentStrategyListItem29" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								-- this.area = true
+							</OnLoad>
+						</Scripts>
+					</Frame>
+
+					<!-- 右分组框 -->
+					<Frame name="$parentRightGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentLeftGroupBox" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension y="-23" />
+								</Offset>
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+							<!-- 筛选/选择夹框架1 -->
+							<Frame name="$parentTabFrame1" inherits="OneMacroTabFrameTemplate1" hidden="false">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="15" y="-15" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-15" y="15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Frames>
+									<!-- 范围标签 -->
+									<Frame name="$parentScopeLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="0" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("范围1")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+
+									<!-- 范围组合框 -->
+									<Frame name="$parentScopeComboBox" inherits="OneMacroComboBoxTemplate1">
+										<Size>
+											<AbsDimension x="160" y="32" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentScopeLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="2" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT">
+												<Offset>
+													<AbsDimension x="-17" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Frame>
+
+									<!-- 清空按钮 -->
+									<Button name="$parentClearButton" inherits="OneMacroButtonTemplate1" text="清空">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentScopeComboBox" relativePoint="TOPRIGHT">
+												<Offset>
+													<AbsDimension x="-14" y="1" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "清空范围"
+											</OnLoad>
+											<OnClick>
+												OneMacroEditor.OnClickMacroFilterClearButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 权重标签 -->
+									<Frame name="$parentWeightLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentScopeComboBox" relativePoint="BOTTOM" />
+											<Anchor point="LEFT" relativeTo="$parentScopeLabel" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("权重")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+									
+									<!-- 权重组合框 -->
+									<Frame name="$parentWeightComboBox" inherits="OneMacroRadioComboBoxTemplate1">
+										<Size>
+											<AbsDimension x="40" y="32" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentWeightLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension y="2" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT" relativeTo="$parentScopeComboBox" />
+										</Anchors>
+									</Frame>
+
+									<!-- 排序标签 -->
+									<Frame name="$parentSortLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentWeightComboBox" relativePoint="BOTTOM" />
+											<Anchor point="LEFT" relativeTo="$parentScopeLabel" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("排序")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+
+									<!-- 排序组合框 -->
+									<Frame name="$parentSortComboBox" inherits="OneMacroRadioComboBoxTemplate1">
+										<Size>
+											<AbsDimension x="40" y="32" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentSortLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="2" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT" relativeTo="$parentScopeComboBox" />
+										</Anchors>
+										<Scripts>
+
+										</Scripts>
+									</Frame>
+
+									<!-- 选取标签 -->
+									<Frame name="$parentChooseLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentSortComboBox" relativePoint="BOTTOM" />
+											<Anchor point="LEFT" relativeTo="$parentScopeLabel" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("选取")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+
+									<!-- 选取组合框 -->
+									<Frame name="$parentChooseComboBox" inherits="OneMacroRadioComboBoxTemplate1">
+										<Size>
+											<AbsDimension x="40" y="32" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentChooseLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="2" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT" relativeTo="$parentScopeComboBox" />
+										</Anchors>
+										<Scripts>
+
+										</Scripts>
+									</Frame>
+
+									<!-- 限数标签 -->
+									<Frame name="$parentLimitLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentChooseComboBox" relativePoint="BOTTOM" />
+											<Anchor point="LEFT" relativeTo="$parentScopeLabel" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("限数")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+
+									<!-- 限数编辑框 -->
+									<EditBox name="$parentLimitEditBox" inherits="OneMacroEditBoxTemplate1" numeric="true">
+										<Size>
+											<AbsDimension x="100" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentLimitLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="0" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT">
+												<Offset>
+													<AbsDimension x="6" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</EditBox>
+
+									<!-- 备注标签 -->
+									<Frame name="$parentRemarkLabel" inherits="OneMacroLabelTemplate1">
+										<Size>
+											<AbsDimension x="60" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentLimitEditBox" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="-4" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT" relativeTo="$parentScopeLabel" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 置文本
+												getglobal(this:GetName() .. "Text"):SetText("备注")
+											</OnLoad>
+										</Scripts>
+									</Frame>
+
+									<!-- 备注编辑框 -->
+									<EditBox name="$parentRemarkEditBox" inherits="OneMacroEditBoxTemplate1">
+										<Size>
+											<AbsDimension x="300" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOP" relativeTo="$parentRemarkLabel" relativePoint="BOTTOM">
+												<Offset>
+													<AbsDimension x="0" y="0" />
+												</Offset>
+											</Anchor>
+											<Anchor point="LEFT" relativeTo="$parentLimitEditBox" />
+										</Anchors>
+									</EditBox>
+
+									<!-- 重置按钮 -->
+									<Button name="$parentResetButton" inherits="OneMacroButtonTemplate1" text="重置">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+												<Offset>
+													<AbsDimension x="5" y="-5" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "重置筛选"
+											</OnLoad>
+											<OnClick>
+												OneMacroEditor.OnClickMacroFilterResetButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 保存按钮 -->
+									<Button name="$parentSaveButton" inherits="OneMacroButtonTemplate1" text="保存">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="RIGHT" relativeTo="$parentResetButton" relativePoint="LEFT" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "保存筛选"
+											</OnLoad>
+											<OnClick>
+												OneMacroEditor.OnClickMacroFilteSaveButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+								</Frames>
+								<Scripts>
+									<OnLoad>
+										-- 显示区域
+										-- getglobal(this:GetName() .. "Area"):Show()
+									</OnLoad> 
+								</Scripts>
+							</Frame>
+
+							<!-- 条件/选择夹框架2 -->
+							<Frame name="$parentTabFrame2" inherits="OneMacroTabFrameTemplate1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+									<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+								</Anchors>
+								<Frames>
+								</Frames>  
+							</Frame>
+
+							<!-- 操作/选择夹框架3 -->
+							<Frame name="$parentTabFrame3" inherits="OneMacroTabFrameTemplate1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+									<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+								</Anchors>
+								<Frames>
+									<!-- 新增按钮 -->
+									<Button name="$parentNewButton" inherits="OneMacroButtonTemplate1" text="新增">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="0" y="4" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "新增操作"
+											</OnLoad>
+											<OnClick>
+												-- OneMacroEditor:OnClickOperationNewButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 清空按钮 -->
+									<Button name="$parentClearButton" inherits="OneMacroButtonTemplate1" text="清空">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentNewButton" relativePoint="TOPRIGHT" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "清空操作"
+											</OnLoad>
+											<OnClick>
+												-- OneMacroEditor:OnClickOperationClearButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 操作列表框 -->
+									<ScrollFrame name="$parentOperationListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentNewButton" relativePoint="BOTTOMLEFT" />
+											<Anchor point="BOTTOMRIGHT">
+												<Offset>
+													<AbsDimension x="-22" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												-- 滚动框架载入
+												ScrollFrame_OnLoad()
+												
+												-- 显示区域
+												--getglobal(this:GetName() .. "Area"):Show()
+
+												OneMacroEditor:OnLoadOperationListBox()
+											</OnLoad>
+											<OnShow>
+												OneMacroEditor:OnShowOperationListBox()
+											</OnShow>
+											<OnVerticalScroll>
+												OneMacroEditor:OnVerticalScrollOperationListBox()
+											</OnVerticalScroll>
+										</Scripts> 
+									</ScrollFrame>
+
+									<!-- 操作列表项 -->
+									<Frame name="$parentOperationListItem1" inherits="OneMacroEditorOperationListItemTemplate" id="1">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListBox" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem2" inherits="OneMacroEditorOperationListItemTemplate" id="2">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem1" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem3" inherits="OneMacroEditorOperationListItemTemplate" id="3">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem2" relativePoint="BOTTOMLEFT"/>
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem4" inherits="OneMacroEditorOperationListItemTemplate" id="4">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem3" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem5" inherits="OneMacroEditorOperationListItemTemplate" id="5">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem4" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem6" inherits="OneMacroEditorOperationListItemTemplate" id="6">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem5" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem7" inherits="OneMacroEditorOperationListItemTemplate" id="7">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem6" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem8" inherits="OneMacroEditorOperationListItemTemplate" id="8">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem7" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem9" inherits="OneMacroEditorOperationListItemTemplate" id="9">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem8" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+									<Frame name="$parentOperationListItem10" inherits="OneMacroEditorOperationListItemTemplate" id="10">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parentOperationListItem9" relativePoint="BOTTOMLEFT" />
+										</Anchors>
+									</Frame>
+								</Frames>
+								<Scripts>
+									<OnLoad>
+										-- 显示区域
+										--getglobal(this:GetName() .. "Area"):Show()
+									</OnLoad> 
+								</Scripts> 
+							</Frame>
+
+							<!-- 自述/选择夹框架4 -->
+							<Frame name="$parentTabFrame4" inherits="OneMacroTabFrameTemplate1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+									<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+								</Anchors>
+								<Frames>
+									<!-- 重置按钮 -->
+									<Button name="$parentResetButton" inherits="OneMacroButtonTemplate1" text="重置">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+												<Offset>
+													<AbsDimension x="5" y="-5" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "重置自述"
+											</OnLoad>
+											<OnClick>
+												OneMacroEditor.OnClickMacroFilterResetButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 保存按钮 -->
+									<Button name="$parentSaveButton" inherits="OneMacroButtonTemplate1" text="保存">
+										<Size>
+											<AbsDimension x="50" y="30" />
+										</Size>
+										<Anchors>
+											<Anchor point="RIGHT" relativeTo="$parentResetButton" relativePoint="LEFT" />
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this.tooltip = "保存自述"
+											</OnLoad>
+											<OnClick>
+												OneMacroEditor.OnClickMacroFilteSaveButton()
+											</OnClick>
+										</Scripts>
+									</Button>
+
+									<!-- 自述分组框 -->
+									<Frame name="$parentReadmeGroupBox" inherits="OneMacroGroupBoxTemplate1">
+										<Anchors>
+											<Anchor point="TOPLEFT" />
+											<Anchor point="BOTTOMRIGHT" relativeTo="$parentResetButton" relativePoint="TOPRIGHT" />
+										</Anchors>
+										<Frames>
+											<!-- 自述编辑框 -->
+											<ScrollFrame name="$parentReadmeEditBox" inherits="OneMacroEditBoxTemplate2">
+												<Anchors>
+													<Anchor point="TOPLEFT">
+														<Offset>
+															<AbsDimension x="7" y="-7" />
+														</Offset>
+													</Anchor>
+													<Anchor point="BOTTOMRIGHT">
+														<Offset>
+															<AbsDimension x="-30" y="7" />
+														</Offset>
+													</Anchor>
+												</Anchors>
+												<Scripts>
+													<OnLoad>
+														-- this.area = true
+														this.text = "我是自述编辑框内容..."
+													</OnLoad> 
+												</Scripts>
+											</ScrollFrame>
+										</Frames>
+										<Scripts>
+											<OnLoad>
+												-- this.area = true
+											</OnLoad> 
+										</Scripts>
+									</Frame>
+								</Frames>
+								<Scripts>
+									<OnLoad>
+										-- 显示区域
+										-- getglobal(this:GetName() .. "Area"):Show()
+									</OnLoad> 
+								</Scripts> 
+							</Frame>
+
+							<!-- 筛选/选择夹1 -->
+							<Button name="$parentTab1" inherits="OneMacroUpTabButtonTemplate1" id="1" text="筛选">
+								<Anchors>
+									<Anchor point="CENTER" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="60" y="13" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<!-- 条件/选择夹2 -->
+							<Button name="$parentTab2" inherits="OneMacroUpTabButtonTemplate1" id="2" text="条件">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="4" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<!-- 操作/选择夹3 -->
+							<Button name="$parentTab3" inherits="OneMacroUpTabButtonTemplate1" id="3" text="操作">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="4" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<!-- 自述/选择夹4 -->
+							<Button name="$parentTab4" inherits="OneMacroUpTabButtonTemplate1" id="4" text="自述">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="4" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								PanelTemplates_SetNumTabs(this, 4)
+								PanelTemplates_SetTab(this, 1)
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames> 
+				<Scripts>
+					<OnLoad>
+
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<!-- 权重/选择夹框架2 -->
+			<Frame name="$parentTabFrame2" inherits="OneMacroTabFrameTemplate1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+				</Anchors>
+				<Frames>
+					<!-- 左分组框 -->
+					<Frame name="$parentLeftGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="220" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<!-- 权重列表框 -->
+							<ScrollFrame name="$parentWeightListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-10" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										ScrollFrame_OnLoad()
+										OneMacroEditor:OnLoadWeightListBox()
+									</OnLoad>
+									<OnShow>
+										OneMacroEditor:OnShowWeightListBox()
+									</OnShow>
+									<OnVerticalScroll>
+										OneMacroEditor:OnVerticalScrollWeightListBox()
+									</OnVerticalScroll>
+								</Scripts>
+							</ScrollFrame>
+
+							<!-- 权重列表项 -->
+							<Button name="$parentWeightListItem1" inherits="OneMacroEditorWeightListItemTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListBox" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="1" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem2" inherits="OneMacroEditorWeightListItemTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem1" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem3" inherits="OneMacroEditorWeightListItemTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem2" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem4" inherits="OneMacroEditorWeightListItemTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem3" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem5" inherits="OneMacroEditorWeightListItemTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem4" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem6" inherits="OneMacroEditorWeightListItemTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem5" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem7" inherits="OneMacroEditorWeightListItemTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem6" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem8" inherits="OneMacroEditorWeightListItemTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem7" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem9" inherits="OneMacroEditorWeightListItemTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem8" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem10" inherits="OneMacroEditorWeightListItemTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem9" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem11" inherits="OneMacroEditorWeightListItemTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem10" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem12" inherits="OneMacroEditorWeightListItemTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem11" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem13" inherits="OneMacroEditorWeightListItemTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem12" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem14" inherits="OneMacroEditorWeightListItemTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem13" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem15" inherits="OneMacroEditorWeightListItemTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem14" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem16" inherits="OneMacroEditorWeightListItemTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem15" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem17" inherits="OneMacroEditorWeightListItemTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem16" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem18" inherits="OneMacroEditorWeightListItemTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem17" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem19" inherits="OneMacroEditorWeightListItemTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem18" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem20" inherits="OneMacroEditorWeightListItemTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem19" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem21" inherits="OneMacroEditorWeightListItemTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem20" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem22" inherits="OneMacroEditorWeightListItemTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem21" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem23" inherits="OneMacroEditorWeightListItemTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem22" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem24" inherits="OneMacroEditorWeightListItemTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem23" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem25" inherits="OneMacroEditorWeightListItemTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem24" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem26" inherits="OneMacroEditorWeightListItemTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem25" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem27" inherits="OneMacroEditorWeightListItemTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem26" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem28" inherits="OneMacroEditorWeightListItemTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem27" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem29" inherits="OneMacroEditorWeightListItemTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem28" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWeightListItem30" inherits="OneMacroEditorWeightListItemTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentWeightListItem29" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								
+							</OnLoad>
+						</Scripts>
+					</Frame>
+
+					<!-- 右分组框 -->
+					<Frame name="$parentRightGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentLeftGroupBox" relativePoint="TOPRIGHT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames> 
+				<Scripts>
+					<OnLoad>
+						-- this.area = true
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<!-- 检测/选择夹框架3 -->
+			<Frame name="$parentTabFrame3" inherits="OneMacroTabFrameTemplate1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+				</Anchors>
+				<Frames>
+					<!-- 左分组框 -->
+					<Frame name="$parentLeftGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="220" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<!-- 检测列表框 -->
+							<ScrollFrame name="$parentDetectListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-10" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										ScrollFrame_OnLoad()
+										OneMacroEditor:OnLoadDetectListBox()
+									</OnLoad>
+									<OnShow>
+										OneMacroEditor:OnShowDetectListBox()
+									</OnShow>
+									<OnVerticalScroll>
+										OneMacroEditor:OnVerticalScrollDetectListBox()
+									</OnVerticalScroll>
+								</Scripts>
+							</ScrollFrame>
+
+							<!-- 检测列表项 -->
+							<Button name="$parentDetectListItem1" inherits="OneMacroEditorDetectListItemTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListBox" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="1" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem2" inherits="OneMacroEditorDetectListItemTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem1" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem3" inherits="OneMacroEditorDetectListItemTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem2" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem4" inherits="OneMacroEditorDetectListItemTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem3" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem5" inherits="OneMacroEditorDetectListItemTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem4" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem6" inherits="OneMacroEditorDetectListItemTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem5" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem7" inherits="OneMacroEditorDetectListItemTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem6" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem8" inherits="OneMacroEditorDetectListItemTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem7" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem9" inherits="OneMacroEditorDetectListItemTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem8" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem10" inherits="OneMacroEditorDetectListItemTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem9" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem11" inherits="OneMacroEditorDetectListItemTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem10" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem12" inherits="OneMacroEditorDetectListItemTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem11" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem13" inherits="OneMacroEditorDetectListItemTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem12" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem14" inherits="OneMacroEditorDetectListItemTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem13" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem15" inherits="OneMacroEditorDetectListItemTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem14" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem16" inherits="OneMacroEditorDetectListItemTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem15" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem17" inherits="OneMacroEditorDetectListItemTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem16" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem18" inherits="OneMacroEditorDetectListItemTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem17" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem19" inherits="OneMacroEditorDetectListItemTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem18" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem20" inherits="OneMacroEditorDetectListItemTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem19" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem21" inherits="OneMacroEditorDetectListItemTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem20" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem22" inherits="OneMacroEditorDetectListItemTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem21" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem23" inherits="OneMacroEditorDetectListItemTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem22" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem24" inherits="OneMacroEditorDetectListItemTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem23" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem25" inherits="OneMacroEditorDetectListItemTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem24" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem26" inherits="OneMacroEditorDetectListItemTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem25" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentWDetectListItem27" inherits="OneMacroEditorDetectListItemTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem26" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem28" inherits="OneMacroEditorDetectListItemTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem27" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem29" inherits="OneMacroEditorDetectListItemTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem28" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentDetectListItem30" inherits="OneMacroEditorDetectListItemTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentDetectListItem29" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								-- this.area = true
+							</OnLoad>
+						</Scripts>
+					</Frame>
+
+					<!-- 右分组框 -->
+					<Frame name="$parentRightGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentLeftGroupBox" relativePoint="TOPRIGHT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+
+						</Frames>
+						<Scripts>
+							<OnLoad>
+
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						-- this.mark = "3"
+						-- this.area = true
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<!-- 动作/选择夹框架4 -->
+			<Frame name="$parentTabFrame4" inherits="OneMacroTabFrameTemplate1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+				</Anchors>
+				<Frames>
+					<!-- 左分组框 -->
+					<Frame name="$parentLeftGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="220" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<!-- 动作列表框 -->
+							<ScrollFrame name="$parentActionListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-10" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										ScrollFrame_OnLoad()
+										OneMacroEditor:OnLoadActionListBox()
+									</OnLoad>
+									<OnShow>
+										OneMacroEditor:OnShowActionListBox()
+									</OnShow>
+									<OnVerticalScroll>
+										OneMacroEditor:OnVerticalScrollActionListBox()
+									</OnVerticalScroll>
+								</Scripts>
+							</ScrollFrame>
+
+							<!-- 动作列表项 -->
+							<Button name="$parentActionListItem1" inherits="OneMacroEditorActionListItemTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListBox" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="1" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem2" inherits="OneMacroEditorActionListItemTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem1" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem3" inherits="OneMacroEditorActionListItemTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem2" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem4" inherits="OneMacroEditorActionListItemTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem3" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem5" inherits="OneMacroEditorActionListItemTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem4" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem6" inherits="OneMacroEditorActionListItemTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem5" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem7" inherits="OneMacroEditorActionListItemTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem6" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem8" inherits="OneMacroEditorActionListItemTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem7" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem9" inherits="OneMacroEditorActionListItemTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem8" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem10" inherits="OneMacroEditorActionListItemTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem9" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem11" inherits="OneMacroEditorActionListItemTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem10" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem12" inherits="OneMacroEditorActionListItemTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem11" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem13" inherits="OneMacroEditorActionListItemTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem12" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem14" inherits="OneMacroEditorActionListItemTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem13" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem15" inherits="OneMacroEditorActionListItemTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem14" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem16" inherits="OneMacroEditorActionListItemTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem15" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem17" inherits="OneMacroEditorActionListItemTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem16" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem18" inherits="OneMacroEditorActionListItemTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem17" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem19" inherits="OneMacroEditorActionListItemTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem18" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem20" inherits="OneMacroEditorActionListItemTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem19" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem21" inherits="OneMacroEditorActionListItemTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem20" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem22" inherits="OneMacroEditorActionListItemTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem21" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem23" inherits="OneMacroEditorActionListItemTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem22" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem24" inherits="OneMacroEditorActionListItemTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem23" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem25" inherits="OneMacroEditorActionListItemTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem24" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem26" inherits="OneMacroEditorActionListItemTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem25" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem27" inherits="OneMacroEditorActionListItemTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem26" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem28" inherits="OneMacroEditorActionListItemTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem27" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem29" inherits="OneMacroEditorActionListItemTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem28" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentActionListItem30" inherits="OneMacroEditorActionListItemTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentActionListItem29" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								-- this.area = true
+							</OnLoad>
+						</Scripts>
+					</Frame>
+
+					<!-- 右分组框 -->
+					<Frame name="$parentRightGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentLeftGroupBox" relativePoint="TOPRIGHT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+
+						</Frames>
+						<Scripts>
+							<OnLoad>
+
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						-- this.mark = "4"
+						-- this.area = true
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<!-- 通报/选择夹框架5 -->
+			<Frame name="$parentTabFrame5" inherits="OneMacroTabFrameTemplate1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+				</Anchors>
+				<Frames>
+					<!-- 左分组框 -->
+					<Frame name="$parentLeftGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="220" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<!-- 清空按钮 -->
+							<Button name="$parentClearButton" inherits="OneMacroButtonTemplate1" text="清空">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-5" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "清空通报"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickReportClearButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 导入按钮 -->
+							<Button name="$parentImportButton" inherits="OneMacroButtonTemplate1" text="导入">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentClearButton" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "导入通报"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickReportImportButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 导出按钮 -->
+							<Button name="$parentExportButton" inherits="OneMacroButtonTemplate1" text="导出">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentImportButton" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "导出通报"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickReportExportButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 通报列表框 -->
+							<ScrollFrame name="$parentReportListBox" inherits="OneMacroScrollBoxTemplate1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentClearButton" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="-5" y="-1" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										ScrollFrame_OnLoad()
+										OneMacroEditor:OnLoadReportListBox()
+									</OnLoad>
+									<OnShow>
+										OneMacroEditor:OnShowReportListBox()
+									</OnShow>
+									<OnVerticalScroll>
+										OneMacroEditor:OnVerticalScrollReportListBox()
+									</OnVerticalScroll>
+								</Scripts>
+							</ScrollFrame>
+
+							<!-- 通报列表项 -->
+							<Button name="$parentReportListItem1" inherits="OneMacroEditorReportListItemTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListBox" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="1" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem2" inherits="OneMacroEditorReportListItemTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem1" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem3" inherits="OneMacroEditorReportListItemTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem2" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem4" inherits="OneMacroEditorReportListItemTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem3" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem5" inherits="OneMacroEditorReportListItemTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem4" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem6" inherits="OneMacroEditorReportListItemTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem5" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem7" inherits="OneMacroEditorReportListItemTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem6" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem8" inherits="OneMacroEditorReportListItemTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem7" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem9" inherits="OneMacroEditorReportListItemTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem8" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem10" inherits="OneMacroEditorReportListItemTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem9" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem11" inherits="OneMacroEditorReportListItemTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem10" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem12" inherits="OneMacroEditorReportListItemTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem11" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem13" inherits="OneMacroEditorReportListItemTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem12" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem14" inherits="OneMacroEditorReportListItemTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem13" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem15" inherits="OneMacroEditorReportListItemTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem14" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem16" inherits="OneMacroEditorReportListItemTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem15" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem17" inherits="OneMacroEditorReportListItemTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem16" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem18" inherits="OneMacroEditorReportListItemTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem17" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem19" inherits="OneMacroEditorReportListItemTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem18" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem20" inherits="OneMacroEditorReportListItemTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem19" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem21" inherits="OneMacroEditorReportListItemTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem20" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem22" inherits="OneMacroEditorReportListItemTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem21" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem23" inherits="OneMacroEditorReportListItemTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem22" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem24" inherits="OneMacroEditorReportListItemTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem23" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem25" inherits="OneMacroEditorReportListItemTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem24" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem26" inherits="OneMacroEditorReportListItemTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem25" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem27" inherits="OneMacroEditorReportListItemTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem26" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem28" inherits="OneMacroEditorReportListItemTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem27" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem29" inherits="OneMacroEditorReportListItemTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem28" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+							<Button name="$parentReportListItem30" inherits="OneMacroEditorReportListItemTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parentReportListItem29" relativePoint="BOTTOMLEFT" />
+								</Anchors>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								-- 显示区域
+								-- getglobal(this:GetName() .. "Area"):Show()
+							</OnLoad>
+						</Scripts>
+					</Frame>
+
+					<!-- 右分组框 -->
+					<Frame name="$parentRightGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentLeftGroupBox" relativePoint="TOPRIGHT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+							<!-- 种类标签 -->
+							<Frame name="$parentKindLabel" inherits="OneMacroLabelTemplate1">
+								<Size>
+									<AbsDimension x="60" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="15" y="-10" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										-- 置文本
+										getglobal(this:GetName() .. "Text"):SetText("种类")
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+							<!-- 种类组合框 -->
+							<Frame name="$parentKindComboBox" inherits="OneMacroComboBoxTemplate1">
+								<Size>
+									<AbsDimension x="40" y="32" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentKindLabel" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="2" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT">
+										<Offset>
+											<AbsDimension x="-2" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									
+								</Scripts>
+							</Frame>
+
+							<!-- 名称标签 -->
+							<Frame name="$parentNameLabel" inherits="OneMacroLabelTemplate1">
+								<Size>
+									<AbsDimension x="60" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentKindComboBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentKindLabel" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										-- 置文本
+										getglobal(this:GetName() .. "Text"):SetText("名称")
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+							<!-- 名称编辑框 -->
+							<EditBox name="$parentNameEditBox" inherits="OneMacroEditBoxTemplate1">
+								<Size>
+									<AbsDimension x="150" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentNameLabel" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT">
+										<Offset>
+											<AbsDimension x="20" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</EditBox>
+
+							<!-- 消息标签 -->
+							<Frame name="$parentMessageLabel" inherits="OneMacroLabelTemplate1">
+								<Size>
+									<AbsDimension x="60" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentNameEditBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-6" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentKindLabel" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										-- 置文本
+										getglobal(this:GetName() .. "Text"):SetText("消息")
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+							<!-- 消息编辑框 -->
+							<EditBox name="$parentMessageEditBox" inherits="OneMacroEditBoxTemplate1">
+								<Size>
+									<AbsDimension x="300" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentMessageLabel" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentNameEditBox" />
+								</Anchors>
+							</EditBox>
+
+							<!-- 方式标签 -->
+							<Frame name="$parentModeLabel" inherits="OneMacroLabelTemplate1">
+								<Size>
+									<AbsDimension x="60" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentMessageEditBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-6" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentKindLabel" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										-- 置文本
+										getglobal(this:GetName() .. "Text"):SetText("方式")
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+							<!-- 方式组合框 -->
+							<Frame name="$parentModeComboBox" inherits="OneMacroComboBoxTemplate1">
+								<Size>
+									<AbsDimension x="40" y="32" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentModeLabel" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="2" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT">
+										<Offset>
+											<AbsDimension x="-2" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Frame>
+
+							<!-- 禁用复选框 -->
+							<CheckButton name="$parentDisableCheckBox" inherits="OneMacroCheckBoxTemplate1" text="禁用">		
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentModeComboBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentKindLabel" />
+								</Anchors>
+							</CheckButton>
+
+							<!-- 备注标签 -->
+							<Frame name="$parentRemarkLabel" inherits="OneMacroLabelTemplate1">
+								<Size>
+									<AbsDimension x="60" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentDisableCheckBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentKindLabel" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										-- 置文本
+										getglobal(this:GetName() .. "Text"):SetText("备注")
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+							<!-- 备注编辑框 -->
+							<EditBox name="$parentRemarkEditBox" inherits="OneMacroEditBoxTemplate1">
+								<Size>
+									<AbsDimension x="300" y="20" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parentRemarkLabel" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+									<Anchor point="LEFT" relativeTo="$parentNameEditBox" />
+								</Anchors>
+							</EditBox>
+
+							<!-- 重置按钮 -->
+							<Button name="$parentResetButton" inherits="OneMacroButtonTemplate1" text="重置">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-10" y="10" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "重置通报"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickReportResetButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<!-- 保存按钮 -->
+							<Button name="$parentSaveButton" inherits="OneMacroButtonTemplate1" text="保存">
+								<Size>
+									<AbsDimension x="50" y="30" />
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT" relativeTo="$parentResetButton" relativePoint="LEFT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltip = "保存通报"
+									</OnLoad>
+									<OnClick>
+										OneMacroEditor:OnClickReportSaveButton()
+									</OnClick>
+								</Scripts>
+							</Button>
+						</Frames>
+						<Scripts>
+							<OnLoad>
+								-- 显示区域
+								-- getglobal(this:GetName() .. "Area"):Show()
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames>
+			</Frame>
+
+			<!-- 自述/选择夹框架6 -->
+			<Frame name="$parentTabFrame6" inherits="OneMacroTabFrameTemplate1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTabFrame1" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentTabFrame1" />
+				</Anchors>
+				<Frames>
+					<!-- 自述分组框 -->
+					<Frame name="$parentReadmeGroupBox" inherits="OneMacroGroupBoxTemplate1">
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+						<Frames>
+							<!-- 自述编辑框 -->
+							<ScrollFrame name="$parentReadmeEditBox" inherits="OneMacroEditBoxTemplate2">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="7" y="-7" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-30" y="7" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										OneMacroEditor.OnShowReadmeEditBox()
+									</OnShow> 
+									<OnMouseDown>
+										-- 按下滚动框架编辑框获得焦点
+										getglobal(this:GetName() .. "EditBox"):SetFocus()
+									</OnMouseDown>
+								</Scripts>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+
+			<!-- 策略/选择夹 -->
+			<Button name="$parentTab1" inherits="OneMacroDownTabButtonTemplate1" id="1" text="策略">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="30" y="8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTab2" inherits="OneMacroDownTabButtonTemplate1" id="2" text="权重">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTab3" inherits="OneMacroDownTabButtonTemplate1" id="3" text="检测">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTab4" inherits="OneMacroDownTabButtonTemplate1" id="4" text="动作">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTab5" inherits="OneMacroDownTabButtonTemplate1" id="5" text="通报">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab4" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTab6" inherits="OneMacroDownTabButtonTemplate1" id="6" text="自述">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab5" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				PanelTemplates_SetNumTabs(this, 6)
+				PanelTemplates_SetTab(this, 1)
+				OneMacroEditor:OnLoadFrame()
+			</OnLoad>
+			<OnShow>
+				OneMacroEditor:OnShowFrame()
+			</OnShow>
+			<OnHide>
+				OneMacroEditor:OnHideFrame()
+			</OnHide>
+		</Scripts>
+	</Frame>
+</Ui>

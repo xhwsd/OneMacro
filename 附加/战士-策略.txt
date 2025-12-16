@@ -1,0 +1,707 @@
+{
+	{
+		name = "双手狂暴",
+		rules = {
+			{
+				name = "自动攻击",
+				operations = {
+					{
+						action = "Melee.AutoAttack",
+					},
+				},
+				continue = true,
+			},
+			{
+				name = "小怪开血性狂暴",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "狂怒",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无狂怒",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "嗜血",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "嗜血有冷却",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "非BOSS",
+					},
+					{
+						left = {
+							detect = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "血性狂暴",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "BOSS开血性狂暴",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "狂怒",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无狂怒",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "嗜血",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "嗜血有冷却",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是BOSS",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "目标有30%以上血量",
+					},
+					{
+						left = {
+							detect = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "血性狂暴",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "死亡之愿开血性狂暴",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "狂怒",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无狂怒",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "目标有20%以下血量",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "死亡之愿",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有死亡之愿",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "血性狂暴",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "死亡之愿开上饰品",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "目标有20%以下血量",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "死亡之愿",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有死亡之愿",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是BOSS",
+					},
+					{
+						left = {
+							detect = "Common.TrinketReady",
+							options = {
+								down =  false,
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "上饰品就绪",
+					},
+				},
+				operations = {
+					{
+						action = "Common.UseTrinket",
+						options = {
+							down =  false,
+						},
+					},
+				},
+				remark = "对BOSS开上饰品",
+			},
+			{
+				name = "死亡之愿开下饰品",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "目标有20%以下血量",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "死亡之愿",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有死亡之愿",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是BOSS",
+					},
+					{
+						left = {
+							detect = "Common.TrinketReady",
+							options = {
+								down =  true,
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "下饰品就绪",
+					},
+				},
+				operations = {
+					{
+						action = "Common.UseTrinket",
+						options = {
+							down =  true,
+						},
+					},
+				},
+				remark = "对BOSS开下饰品",
+			},
+			{
+				name = "战斗怒吼",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "战斗怒吼",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无战斗怒吼",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 9,
+						},
+						remark = "有9点以上怒气",
+					},
+					{
+						left = {
+							detect = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "战斗怒吼",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "嗜血",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "嗜血",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "嗜血无冷却",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 29,
+						},
+						remark = "有29点以上怒气",
+					},
+					{
+						left = {
+							detect = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "战斗怒吼",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "小怪开旋风斩",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "非BOSS",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "旋风斩",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "旋风斩无冷却",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 24,
+						},
+						remark = "有24点以上怒气",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "旋风斩",
+						},
+					},
+				},
+				remark = "待实现检测双子等场景",
+			},
+			{
+				name = "斩杀",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "目标有20%以下血量",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 24,
+						},
+						remark = "有40点以上怒气",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "斩杀",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "BOSS开旋风斩",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsBoss",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是BOSS",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 19,
+						},
+						remark = "目标有19%以上血量",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "旋风斩",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "旋风斩无冷却",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 24,
+						},
+						remark = "有24点以上怒气",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "旋风斩",
+						},
+					},
+				},
+				remark = "待实现检测双子等场景",
+			},
+			{
+				name = "果断一击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 19,
+						},
+						remark = "目标有19%以上血量",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "旋风斩",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "旋风斩有冷却",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "嗜血",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "嗜血有冷却",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 14,
+						},
+						remark = "有14点以上怒气",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 14,
+						},
+						remark = "有14点以上怒气",
+					},
+					{
+						left = {
+							detect = "Melee.EndSeconds",
+						},
+						comparison = ">",
+						right = {
+							value = 1.5,
+						},
+						remark = "距离下次攻击超过1.5秒",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "果断一击",
+						},
+					},
+				},
+				remark = "",
+			},
+			{
+				name = "英勇打击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 19,
+						},
+						remark = "目标有19%以上血量",
+					},
+					{
+						left = {
+							detect = "Common.Rage",
+						},
+						comparison = ">",
+						right = {
+							value = 70,
+						},
+						remark = "有70点以上怒气",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "英勇打击",
+						},
+					},
+				},
+				remark = "",
+			},
+		},
+		remark = "双手武器",
+		readme = "更新日期：2025-11-14 \n参考天赋：https://talents.turtle-wow.org/warrior?points=dQQAAYDQ-AoAooAAoRCFAB- \n参考来源：https://www.kdocs.cn/l/coRUAzUrhGw0",
+	},
+}

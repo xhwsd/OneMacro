@@ -1,0 +1,66 @@
+## Interface: 11200
+## Title: |CFFFFFF00[库巴]|R一键宏
+## Notes: 可视化通用一键宏
+## Author: 树先生
+## Version: 0.1.1
+## OptionalDeps: 
+## SavedVariablesPerCharacter: OneMacroDB
+## X-Category: Combat
+## X-Email: xhwsd@qq.com
+## X-Website: https://gitee.com/ku-ba/OneMacro
+## X-Commands: /om, /OneMacro
+
+# ACE2核心库：
+Libs\AceLibrary\AceLibrary.lua
+Libs\AceOO-2.0\AceOO-2.0.lua
+#Libs\AceLocale-2.2\AceLocale-2.2.lua
+Libs\AceEvent-2.0\AceEvent-2.0.lua
+Libs\AceConsole-2.0\AceConsole-2.0.lua
+Libs\AceDebug-2.0\AceDebug-2.0.lua
+Libs\AceHook-2.1\AceHook-2.1.lua
+Libs\AceDB-2.0\AceDB-2.0.lua
+Libs\AceAddon-2.0\AceAddon-2.0.lua
+Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua
+
+# ACE2第三方库：
+Libs\Tablet-2.0\Tablet-2.0.lua
+Libs\Dewdrop-2.0\Dewdrop-2.0.lua
+Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
+Libs\Compost-2.0\Compost-2.0.lua
+Libs\Deformat-2.0\Deformat-2.0.lua
+Libs\Gratuity-2.0\Gratuity-2.0.lua
+Libs\SpellCache-1.0\SpellCache-1.0.lua
+Libs\SpellStatus-1.0\SpellStatus-1.0.lua
+Libs\SpecialEvents-Aura-2.0\SpecialEvents-Aura-2.0.lua
+Libs\ParserLib\optimizer-zhCN.lua
+Libs\ParserLib\FixGlobalString.lua
+Libs\ParserLib\ParserLib.lua
+Libs\RosterLib-2.0\RosterLib-2.0.lua
+
+# ACE2自定义库：
+Libs\KuBa-Array-1.0\KuBa-Array-1.0.lua
+Libs\KuBa-Target-1.0\KuBa-Target-1.0.lua
+Libs\KuBa-Chat-1.0\KuBa-Chat-1.0.lua
+Libs\KuBa-Prompt-1.0\KuBa-Prompt-1.0.lua
+Libs\KuBa-Boss-1.0\KuBa-Boss-1.0.lua
+Libs\KuBa-Buff-1.0\KuBa-Buff-1.0.lua
+Libs\KuBa-Bleed-1.0\KuBa-Bleed-1.0.lua
+Libs\KuBa-State-1.0\KuBa-State-1.0.lua
+Libs\KuBa-Action-1.0\KuBa-Action-1.0.lua
+Libs\KuBa-Spell-1.0\KuBa-Spell-1.0.lua
+Libs\KuBa-Cast-1.0\KuBa-Cast-1.0.lua
+Libs\KuBa-Item-1.0\KuBa-Item-1.0.lua
+Libs\KuBa-Heal-1.0\KuBa-Heal-1.0.lua
+
+# 插件脚本：
+Main.lua
+Helper.lua
+Templates.xml
+Roster.xml
+Editor.xml
+Runner.lua
+Extends\Common.lua
+Extends\Melee.lua
+Extends\Remote.lua
+Extends\Heal.lua
+Extends\Qther.lua

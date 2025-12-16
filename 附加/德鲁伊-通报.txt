@@ -1,0 +1,121 @@
+{
+	["CastInstant"] = {
+		name = "施法瞬发",
+		reports = {
+			["挑战咆哮"] = {
+				mode = "SAY",
+				message = "挑战咆哮：保护我，群嘲了！",
+			},
+			["狂暴回复"]  = {
+				mode = "YELL",
+				message = "狂暴回复：快奶我，要嗝屁了！",
+			},
+			["狂暴"]  = {
+				mode = "SAY",
+				message = "狂暴：我和你拼命了！",
+			},
+			["迅捷治愈"] = {
+				mode = "PROMPT",
+				message = "给<{TargetName}>小迅捷",
+				remark = "通报太频繁，改用提示方式",
+			},
+		},
+	},
+	["CastFailure"] = {
+		name = "施法失败",
+		reports = {
+			["复生"] = {
+				mode = "YELL",
+				message = "复生：战复<{TargetName}>中断！",
+			},
+		},
+	},
+	["CastCastingStart"] = {
+		name = "施法读条开始",
+		reports = {
+			["复生"] = {
+				mode = "SAY",
+				message = "复生：战复<{TargetName}>开始...",
+			},
+		},
+	},
+	["CastCastingFinish"] = {
+		name = "施法读条完成",
+		reports = {
+			["复生"] = {
+				mode = "SAY",
+				message = "复生：战复<{TargetName}>完成！",
+			},
+		},
+	},
+	["BuffGain"] = {
+		name = "增益获得",
+		reports = {
+			["树皮术"] = {
+				mode = "YELL",
+				message = "树皮术：快奶我，顶不住了！",
+			},
+			["树皮术（野性）"] = {
+				mode = "YELL",
+				message = "树皮术：快奶我，扛不住了！",
+			},
+			["自然迅捷"] = {
+				mode = "SAY",
+				message = "自然迅捷：为<{TargetName}>准备大迅捷",
+			},
+			["枭兽形态"] = {
+				mode = "SAY",
+				message = "爱与正义的水手服美少女战士！",
+				disable = true,
+				remark = "有点中二，禁用了",
+			},
+			["日蚀"] = {
+				mode = "SAY",
+				message = "临兵斗者皆阵列在前，恶灵退散！",
+				disable = true,
+				remark = "有点中二，禁用了",
+			},
+			["月蚀"] = {
+				mode = "SAY",
+				message = "我要代表月亮消灭你们！",
+				disable = true,
+				remark = "有点中二，禁用了",
+			}
+		},
+	},
+	["BuffLost"] = {
+		name = "增益失去",
+		reports = {
+			["自然迅捷"] = {
+				mode = "SAY",
+				message = "自然迅捷：已给<{TargetName}>大迅捷",
+			},
+		},
+	},
+	["SpellHit"] = {
+		name = "法术已命中",
+		reports = {
+			["低吼"] = {
+				mode = "SAY",
+				message = "低吼：已嘲讽<{VictimName}>",
+			},
+			["重击"] = {
+				mode = "SAY",
+				message = "重击：已击晕<{VictimName}>",
+			},
+		},
+	},
+	["SpellMiss"] = {
+		name = "法术未命中",
+		reports = {
+			["低吼"] = {
+				mode = "YELL",
+				message = "低吼：<{VictimName}>{MissType}嘲讽",
+			},
+			["重击"] = {
+				mode = "YELL",
+				message = "重击：<{VictimName}>{MissType}",
+			},
+		},
+	},
+}

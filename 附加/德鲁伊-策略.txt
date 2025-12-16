@@ -1,0 +1,4438 @@
+{
+	{
+		name = "熊德拉单",
+		rules = {
+			{
+				name = "到熊形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "巨熊形态",
+						},
+						remark = "非熊形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "巨熊形态",
+						},
+					},
+				},
+				remark = "切换到熊形态",
+			},
+			{
+				name = "自动攻击",
+				operations = {
+					{
+						action = "Melee.AutoAttack",
+					},
+				},
+				continue = true,
+			},
+			{
+				name = "狂暴回复",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 40,
+						},
+						remark = "生命低于40%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂暴回复",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂暴回复无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂暴回复",
+						},
+					},
+				},
+				remark = "当生命低于40%时，使用狂暴回复",
+			},
+			{
+				name = "狂怒",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "狂暴回复",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有狂暴回复",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂怒"
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂怒无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂怒",
+						}
+					},
+				},
+				remark = "当有狂暴回复时，使用狂怒",
+			},
+			{
+				name = "狂暴",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 30,
+						},
+						remark = "生命低于30%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂暴",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂暴无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂暴",
+						},
+					},
+				},
+				remark = "当生命低于30%时，使用狂暴",
+			},
+			{
+				name = "树皮术",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "生命低于20%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "树皮术（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "树皮术无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "树皮术（野性）",
+						},
+					},
+				},
+				remark = "当生命低于20%时，使用树皮术",
+			},
+			{
+				name = "野蛮撕咬",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Rage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 80,
+						},
+						remark = "怒气快满",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "或有节能施法",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "野蛮撕咬",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "野蛮撕咬无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "野蛮撕咬",
+						},
+					},
+				},
+				remark = "当怒气快满或有节能施法时，使用野蛮撕咬",
+			},
+			{
+				name = "重整",
+				conditions = {
+					{
+						left = {
+							action = "Common.Rage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							detect = "Melee.TransformRestore",
+							options = {
+								rage = true,
+							},
+						},
+						remark = "怒气低于变形可恢复量",
+					},
+					{
+						left = {
+							detect = "Melee.TransformRestore",
+							options = {
+								rage = true,
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 10,
+						},
+						remark = "变形可恢复10点怒气",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "重整",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "重整无冷却",
+					},
+					{
+						left = {
+							detect = "Common.Mana",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 400,
+						},
+						remark = "有400法力值",
+					},
+					{
+						left = {
+							action = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "不在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "重整",
+						}
+					},
+				},
+				remark = "起手使用重整，确保有怒气",
+			},
+			{
+				name = "精灵之火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "精灵之火（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "精灵之火无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "精灵之火（野性）",
+						},
+					},
+				},
+				remark = "精灵之火好了就用，骗节能",
+			},
+			{
+				name = "槌击",
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "槌击",
+						},
+					},
+				},
+				remark = "使用槌击，泄怒气",
+			},
+		},
+		remark = "熊德一键拉单个怪",
+		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtle-wow.org/viewtopic.php?t=943",
+	},
+	{
+		name = "熊德拉群",
+		rules = {
+			{
+				name = "到熊形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "巨熊形态",
+						},
+						remark = "非熊形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "巨熊形态",
+						},
+					},
+				},
+				remark = "切换到熊形态",
+			},
+			{
+				name = "自动攻击",
+				operations = {
+					{
+						action = "Melee.AutoAttack",
+					},
+				},
+				continue = true,
+			},
+			{
+				name = "狂暴回复",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 40,
+						},
+						remark = "生命低于40%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂暴回复",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂暴回复无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂暴回复",
+						},
+					},
+				},
+				remark = "当生命低于40%时，使用狂暴回复",
+			},
+			{
+				name = "狂怒",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "狂暴回复",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有狂暴回复",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂怒",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂怒无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂怒",
+						},
+					},
+				},
+				remark = "当有狂暴回复时，使用狂怒",
+			},
+			{
+				name = "狂暴",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 30,
+						},
+						remark = "生命低于30%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "狂暴",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "狂暴无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "狂暴",
+						},
+					},
+				},
+				remark = "当生命低于30%时，使用狂暴",
+			},
+			{
+				name = "树皮术",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "生命低于20%",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "树皮术（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "树皮术无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "树皮术（野性）",
+						},
+					},
+				},
+				remark = "当生命低于20%时，使用树皮术",
+			},
+			{
+				name = "挫志咆哮",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "挫志咆哮",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "目标无挫志咆哮",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "挫志怒吼",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "并目标无挫志怒吼",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "挫志咆哮",
+						},
+					},
+				},
+				remark = "当目标无挫志咆哮和挫志怒吼时，使用挫志咆哮",
+			},
+			{
+				name = "野蛮撕咬",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Rage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 80,
+						},
+						remark = "怒气超过80",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "或有节能施法时",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "野蛮撕咬",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "野蛮撕咬无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "野蛮撕咬",
+						},
+					},
+				},
+				remark = "当怒气快满或有节能施法时，使用野蛮撕咬",
+			},
+			{
+				name = "槌击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Rage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 60,
+						},
+						remark = "怒气超过60",
+					},
+					{
+						logical = "or",
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有节能施法",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "槌击",
+						},
+					},
+				},
+				remark = "当怒气过多或有节能施法时，使用槌击",
+			},
+			{
+				name = "重整",
+				conditions = {
+					{
+						left = {
+							action = "Common.Rage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							detect = "Melee.TransformRestore",
+							options = {
+								rage = true,
+							},
+						},
+						remark = "怒气低于变形可恢复量",
+					},
+					{
+						left = {
+							detect = "Melee.TransformRestore",
+							options = {
+								rage = true,
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 10,
+						},
+						remark = "变形可恢复10点怒气",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "重整",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "重整无冷却时",
+					},
+					{
+						left = {
+							detect = "Common.Mana",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 400,
+						},
+						remark = "有400法力值",
+					},
+					{
+						left = {
+							action = "Common.IsCombat",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "不在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "重整",
+						}
+					},
+				},
+				remark = "起手使用重整，确保有怒气",
+			},
+			{
+				name = "精灵之火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "精灵之火（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "精灵之火无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "精灵之火（野性）",
+						},
+					},
+				},
+				remark = "精灵之火好了就用，骗节能",
+			},
+			{
+				name = "挥击",
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "挥击",
+						},
+					},
+				},
+				remark = "使用挥击，泄怒气",
+			},
+		},
+		remark = "熊德一键拉多个怪",
+		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtle-wow.org/viewtopic.php?t=943",
+	},
+	{
+		name = "树德奶所有",
+		rules = {
+			{
+				name = "到树形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "生命之树形态",
+						},
+						remark = "非树形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "生命之树形态",
+						},
+					},
+				},
+				remark = "切换到树形态",
+			},
+			{
+				name = "打断愈合",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsCasting",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在施法读条",
+					},
+					{
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "愈合",
+						},
+						remark = "法术为愈合",
+					},
+					{
+						left = {
+							detect = "Common.CastAssistLosePercentage",
+						},
+						comparison = "<=",
+						right = {
+							value = 10,
+						},
+						remark = "失血未超10%，注意后续相同起始失血",
+					},
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 6,
+						},
+						remark = "无6件梦游者，不可虚空治疗",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.CastSpellLevel",
+						},
+						comparison = ">",
+						right = {
+							value = 4,
+						},
+						remark = "愈合等级大于4级，耗蓝太多",
+					},
+				},
+				operations = {
+					{
+						action = "Common.StopCasting",
+					},
+					{
+						action = "Common.Prompt",
+						options = {
+							content = "打断给<{AssistName}>的<{SpellName}>",
+							type = "info",
+						},
+					},
+				},
+				remark = "打断失血未超10%的愈合"
+			},
+			{
+				name = "回春回蓝",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 2,
+						},
+						remark = "有2件梦游者",
+					},
+					{
+						left = {
+							detect = "Common.ManaLose",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 360,
+						},
+						remark = "法力损失有360及以上，回春术6跳*每跳几率回60法力",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "自己无回春术",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术(等级 1)",
+							unit = "player",
+						},
+					},
+				},
+				remark = "有2件梦游者时给自己上回春，用于回蓝",
+			},
+			{
+				name = "迅捷愈合",
+				filter = {
+					scopes = {"raid", "party", "player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "自然迅捷",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己有自然迅捷",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 10,
+						},
+						remark = "可能已被治疗，起始失血放宽",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超10%（因大迅捷存在，放宽）单位，使用大迅捷愈合",
+			},
+			{
+				name = "自然迅捷",
+				filter = {
+					scopes = {"raid", "party", "player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 60,
+						},
+						remark = "失血60%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "自然迅捷",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自然迅捷无冷却",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "自然迅捷",
+						},
+					},
+				},
+				remark = "筛选失血已超60%单位，准备大迅捷",
+			},
+			{
+				name = "迅捷治愈",
+				filter = {
+					scopes = {"raid", "party", "player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "失血30%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "迅捷治愈",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "迅捷治愈无冷却",
+					},
+					{
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 5,
+						},
+						remark = "有5级及以上的愈合",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 7,
+						},
+						remark = "或有7级及以上的回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "迅捷治愈",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超30%单位，使用小迅捷",
+			},
+			{
+				name = "愈合",
+				filter = {
+					scopes = {"raid", "party", "player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 10,
+						},
+						remark = "失血10%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+							percentage = 85,
+						},
+					},
+				},
+				remark = "筛选失血已超10%单位，使用适配等级愈合",
+			},
+			{
+				name = "回春术",
+				filter = {
+					scopes = {"raid", "party", "player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 0,
+						},
+						remark = "已有失血",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "<=",
+						right = {
+							value = 10,
+						},
+						remark = "失血10%及以下",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无愈合",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血未超10%单位，使用适配等级回春",
+			},
+			{
+				name = "名单回春",
+				filter = {
+					scopes = {"roster"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术"
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选无回春术单位，使用满级回春",
+			},
+			{
+				name = "虚空治疗",
+				disable = true,
+				filter = {
+					scopes = {"raid"},
+					weight = "Common.NoneBuff",
+					options = {
+						buff = "愈合"
+					},
+					choose = "random",
+					remark = "在团队范围随机一个无愈合的"
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 6,
+						},
+						remark = "有6件梦游者",
+					},
+					{
+						left = {
+							detect = "Common.ManaPercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 80,
+						},
+						remark = "有80%及以上法力",
+					},
+					{
+						left = {
+							action = "Common.IsCombat",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "在战斗中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愈合(等级 4)",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "有6件梦游者时随机给团员上愈合，用于虚空治疗",
+			},
+		},
+		remark = "树德一键奶所有",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+	},
+	{
+		name = "树德奶队伍",
+		rules = {
+			{
+				name = "到树形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "生命之树形态",
+						},
+						remark = "非树形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "生命之树形态",
+						},
+					},
+				},
+				remark = "切换到树形态",
+			},
+			{
+				name = "打断愈合",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsCasting",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在施法读条",
+					},
+					{
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "愈合",
+						},
+						remark = "法术为愈合",
+					},
+					{
+						left = {
+							detect = "Common.CastAssistLosePercentage",
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "目标失血未超5%，注意同步后续相关起始失血",
+					},
+				},
+				operations = {
+					{
+						action = "Common.StopCasting",
+					},
+					{
+						action = "Common.Prompt",
+						options = {
+							content = "打断给<{AssistName}>的<{SpellName}>",
+							type = "info",
+						},
+					},
+				},
+				remark = "打断失血未超5%的愈合"
+			},
+			{
+				name = "回春回蓝",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 2,
+						},
+						remark = "有2件梦游者",
+					},
+					{
+						left = {
+							detect = "Common.ManaLose",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 360,
+						},
+						remark = "法力损失有360及以上，回春术6跳*每跳几率回60法力",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "自己无回春术",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术(等级 1)",
+							unit = "player",
+						},
+					},
+				},
+				remark = "有2件梦游者时给自己补回春术，用于回蓝",
+			},
+			{
+				name = "迅捷愈合",
+				filter = {
+					scopes = {"team"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					remark = "在小队范围按失血排序，遍历所有",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "自然迅捷",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己有自然迅捷",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 10,
+						},
+						remark = "可能已被治疗，起始失血放宽",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超10%单位，使用大迅捷愈合",
+			},
+			{
+				name = "自然迅捷",
+				filter = {
+					scopes = {"team"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					remark = "在小队范围按失血排序，遍历所有",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 60,
+						},
+						remark = "失血60%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "自然迅捷",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自然迅捷无冷却",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "自然迅捷",
+						},
+					},
+				},
+				remark = "筛选失血已超60%单位，准备大迅捷",
+			},
+			{
+				name = "迅捷治愈",
+				filter = {
+					scopes = {"team"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					remark = "在小队范围按失血排序，遍历所有",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "失血30%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "迅捷治愈",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "迅捷治愈无冷却",
+					},
+					{
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 5,
+						},
+						remark = "有5级及以上的愈合",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 7,
+						},
+						remark = "或有7级及以上的回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "迅捷治愈",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超30%单位，使用小迅捷",
+			},
+			{
+				name = "愈合",
+				filter = {
+					scopes = {"team"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					remark = "在小队范围按失血排序，遍历所有",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血5%以上单位，使用适配等级愈合",
+			},
+			{
+				name = "回春术",
+				filter = {
+					scopes = {"team"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					remark = "在小队范围按失血排序，遍历所有",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 0,
+						},
+						remark = "已有失血",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%及以下",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无愈合",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血未超5%单位，使用适配等级回春",
+			},
+			{
+				name = "名单回春",
+				filter = {
+					scopes = {"roster"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选无回春术单位，使用满级回春",
+			},
+		},
+		remark = "树德一键奶队伍（所在）",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+	},
+	{
+		name = "树德奶名单",
+		rules = {
+			{
+				name = "到树形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "生命之树形态",
+						},
+						remark = "非树形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "生命之树形态",
+						},
+					},
+				},
+				remark = "切换到树形态",
+			},
+			{
+				name = "打断愈合",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsCasting",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在施法读条",
+					},
+					{
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "愈合",
+						},
+						remark = "法术为愈合",
+					},
+					{
+						left = {
+							detect = "Common.CastAssistLosePercentage",
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "目标失血未超5%，注意后续治疗起始失血",
+					},
+				},
+				operations = {
+					{
+						action = "Common.StopCasting",
+					},
+					{
+						action = "Common.Prompt",
+						options = {
+							content = "打断给<{AssistName}>的<{SpellName}>",
+							type = "info",
+						},
+					}
+				},
+				remark = "打断给失血未超5%的愈合"
+			},
+			{
+				name = "回春回蓝",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 2,
+						},
+						remark = "有2件梦游者",
+					},
+					{
+						left = {
+							detect = "Common.ManaLose",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 360,
+						},
+						remark = "法力损失有360，回春术6跳*每跳几率回60法力",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "自己无回春术",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术(等级 1)",
+							unit = "player",
+						},
+					},
+				},
+				remark = "有2件梦游者时给自己上回春术，用于回蓝",
+			},
+			{
+				name = "迅捷愈合",
+				filter = {
+					scopes = {"roster", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单和玩家范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "自然迅捷",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己有自然迅捷",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 10,
+						},
+						remark = "可能已被治疗，起始失血放宽",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超10%单位，使用大迅捷愈合",
+			},
+			{
+				name = "自然迅捷",
+				filter = {
+					scopes = {"roster", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单和玩家范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 60,
+						},
+						remark = "失血60%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "自然迅捷",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自然迅捷无冷却",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "自然迅捷",
+						},
+					},
+				},
+				remark = "筛选失血已超60%单位，准备大迅捷",
+			},
+			{
+				name = "迅捷治愈",
+				filter = {
+					scopes = {"roster", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单和玩家范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "失血30%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "迅捷治愈",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "迅捷治愈无冷却",
+					},
+					{
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 5,
+						},
+						remark = "有5级及以上的愈合",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 7,
+						},
+						remark = "或有7级及以上的回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "迅捷治愈",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超30%单位，使用小迅捷",
+			},
+			{
+				name = "愈合",
+				filter = {
+					scopes = {"roster", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单和玩家范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超5%单位，使用适配等级愈合",
+			},
+			{
+				name = "回春术",
+				filter = {
+					scopes = {"roster", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单和玩家范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 0,
+						},
+						remark = "已有失血",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%及以下",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无愈合",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+							percentage = 80,
+						},
+					},
+				},
+				remark = "筛选失血未超5%单位，使用适配等级回春",
+			},
+			{
+				name = "名单回春",
+				filter = {
+					scopes = {"roster"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在名单范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选无回春术单位，使用满级回春",
+			},
+		},
+		remark = "树德一键奶名单和自己",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+	},
+	{
+		name = "树德奶目标",
+		rules = {
+			{
+				name = "到树形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "生命之树形态",
+						},
+						remark = "非树形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "生命之树形态",
+						},
+					},
+				},
+				remark = "切换到树形态",
+			},
+			{
+				name = "打断愈合",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsCasting",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在施法读条",
+					},
+					{
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "法术为愈合",
+						},
+					},
+					{
+						left = {
+							detect = "Common.CastAssistLosePercentage",
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "目标失血未超5%，注意后续相关起始失血",
+					},
+				},
+				operations = {
+					{
+						action = "Common.StopCasting",
+					},
+					{
+						action = "Common.Prompt",
+						options = {
+							content = "打断给<{AssistName}>的<{SpellName}>",
+							type = "info",
+						},
+					},
+				},
+				remark = "打断给失血未超5%的愈合"
+			},
+			{
+				name = "回春回蓝",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SuitCount",
+							options = {
+								suit = "梦游者",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 2,
+						},
+						remark = "有2件梦游者",
+					},
+					{
+						left = {
+							detect = "Common.ManaLose",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 360,
+						},
+						remark = "法力损失有360及以上，回春术6跳*每跳几率回60法力",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "自己无回春术",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术(等级 1)",
+							unit = "player",
+						},
+					},
+				},
+				remark = "有2件梦游者时给自己上回春，用于回蓝",
+			},
+			{
+				name = "迅捷愈合",
+				filter = {
+					scopes = {"player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在玩家和目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "自然迅捷",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自己有自然迅捷",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 10,
+						},
+						remark = "可能已被治疗，起始失血放宽",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超10%单位，使用大迅捷愈合",
+			},
+			{
+				name = "自然迅捷",
+				filter = {
+					scopes = {"player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在玩家和目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 60,
+						},
+						remark = "失血60%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "自然迅捷",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "自然迅捷无冷却",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "自然迅捷",
+						},
+					},
+				},
+				remark = "筛选失血已超60%单位，准备大迅捷",
+			},
+			{
+				name = "迅捷治愈",
+				filter = {
+					scopes = {"player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在玩家和目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "失血30%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "迅捷治愈",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "迅捷治愈无冷却",
+					},
+					{
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "愈合",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 5,
+						},
+						remark = "有5级及以上的愈合",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.BuffLevel",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 7,
+						},
+						remark = "或有7级及以上的回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "迅捷治愈",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血已超30%单位，使用小迅捷",
+			},
+			{
+				name = "愈合",
+				filter = {
+					scopes = {"player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在玩家和目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "愈合",
+							unit = "filter",
+							percentage = 90,
+						},
+					},
+				},
+				remark = "筛选失血已超5%单位，使用适配等级愈合",
+			},
+			{
+				name = "回春术",
+				filter = {
+					scopes = {"player", "target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在玩家和目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 0,
+						},
+						remark = "已有失血",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "失血5%及以下",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选失血未超5%单位，使用适配等级回春",
+			},
+			{
+				name = "目标回春",
+				filter = {
+					scopes = {"target"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在目标范围按失血排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "回春术",
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无回春术"
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "回春术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "筛选无回春单位，使用满级回春",
+			},
+		},
+		remark = "树德一键奶目标（目标的目标）和自己",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+	},
+	{
+		name = "鸟德",
+		rules = {
+			{
+				name = "到鸟形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "枭兽形态",
+						},
+						remark = "非鸟形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "枭兽形态",
+						},
+					},
+				},
+				remark = "切换到鸟形态",
+			},
+			{
+				name = "斗转星移打星火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "斗转星移",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有斗转星移（施法速度提高）",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "月蚀",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有月蚀（奥术伤害增益）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "星火术",
+						},
+					},
+				},
+				remark = "有斗转星移、有月蚀时打星火术",
+			},
+			{
+				name = "斗转星移打愤怒",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "斗转星移",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有斗转星移（施法速度提高）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愤怒",
+						},
+					},
+				},
+				remark = "有斗转星移（无月蚀）时打愤怒",
+			},
+			{
+				name = "补虫群",
+				conditions = {
+					{
+						left = {
+							detect = "Common.CanCurse",
+							options = {
+								buff = "虫群",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "无虫群",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "有30%以上生命",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是首领",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.RaidMembers",
+						},
+						comparison = "<",
+						right = {
+							value = 25,
+						},
+						remark = "或25人以下",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "虫群",
+						},
+					},
+				},
+				remark = "有30%以上生命、是首领或25人以下时补虫群",
+			},
+			{
+				name = "补月火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.CanCurse",
+							options = {
+								buff = "月火术",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "无月火术",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "日蚀",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无日蚀（自然伤害增益）",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "自然之赐",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无自然之赐（下个施法时间减少）",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "有30%以上生命",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是首领",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.RaidMembers",
+						},
+						comparison = "<",
+						right = {
+							value = 25,
+						},
+						remark = "或25人以下",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "月火术",
+						},
+					},
+				},
+				remark = "无日蚀、无自然之赐、有30%以上生命、是首领或25人以下时补月火术",
+			},
+			{
+				name = "补精灵火",
+				disable = true,
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "精灵之火",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无精灵之火",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "精灵之火",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "精灵之火无冷却",
+					},
+					{
+						left = {
+							detect = "Common.HealthPercentage",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 30,
+						},
+						remark = "有30%以上生命",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "是首领",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.RaidMembers",
+						},
+						comparison = "<",
+						right = {
+							value = 25,
+						},
+						remark = "或25人以下",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "精灵之火",
+						},
+					},
+				},
+				remark = "有30%以上生命、是首领或25人以下时补精灵之火",
+			},
+			{
+				name = "日蚀打愤怒",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "日蚀",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有日蚀（自然伤害增益）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愤怒",
+						},
+					},
+				},
+				remark = "有日蚀时打愤怒",
+			},
+			{
+				name = "月蚀打星火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "月蚀",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有月蚀（奥术伤害增益）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "星火术",
+						},
+					},
+				},
+				remark = "有月蚀时打星火术",
+			},
+			{
+				name = "昼至打星火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "昼至",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有昼至（无法获得月蚀）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "星火术",
+						},
+					},
+				},
+				remark = "有昼至时打星火术",
+			},
+			{
+				name = "万物平衡打星火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.BuffLayers",
+							options = {
+								buff = "万物平衡",
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 3,
+						},
+						remark = "有3层万物平衡",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "夜至",
+								unit = "player"
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无夜至（无法获得日蚀）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "星火术",
+						},
+					},
+				},
+				remark = "有3层万物平衡、无夜至时打星火术",
+			},
+			{
+				name = "打愤怒",
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "愤怒",
+						},
+					},
+				},
+				remark = "其它情况打愤怒",
+			},
+		},
+		remark = "鸟德一键输出",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=oAaYYIFYBLFAB--FAAoAa \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030194253693696",
+	},
+	{
+		name = "猫德",
+		rules = {
+			{
+				name = "到猫形态",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Form",
+						},
+						comparison = "!=",
+						right = {
+							value = "猎豹形态",
+						},
+						remark = "非猫形态",
+					},
+				},
+				operations = {
+					{
+						action = "Common.SwitchForm",
+						options = {
+							form = "猎豹形态",
+						},
+					},
+				},
+				remark = "切换到猫形态",
+			},
+			{
+				name = "潜行中补猛虎",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "潜行",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在潜行中",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "猛虎之怒",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无猛虎之怒（伤害提高和获得血之狂暴）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "猛虎之怒",
+						},
+					},
+					{
+						action = "Common.RecordTime",
+						options = {
+							name = "猛虎之怒",
+						},
+						remark = "记录猛虎之怒使用时间",
+					},
+				},
+				remark = "潜行中补猛虎",
+			},
+			{
+				name = "潜行中突袭",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "潜行",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在潜行中",
+					},
+					{
+						left = {
+							detect = "Common.CanBleed",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标可流血"
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "突袭",
+						},
+						remark = "不检验是否在目标背后，直接显示不在目标背后",
+					},
+				},
+				remark = "潜行中对打突袭（产生一个流血效果）",
+			},
+			{
+				name = "潜行中毁灭",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "潜行",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在潜行中",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "毁灭",
+						},
+						remark = "不检验是否在目标背后，直接显示不在目标背后",
+					},
+				},
+				remark = "潜行中打毁灭",
+			},
+			{
+				name = "自动攻击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "潜行",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+					},
+				},
+				operations = {
+					{
+						action = "Melee.AutoAttack",
+						remark = "自动攻击无公CD，继续下一个",
+					},
+				},
+				continue = true,
+				remark = "非潜行中，开启自动攻击",
+			},
+			{
+				name = "能量见底用重整",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 10,
+						},
+						remark = "能量低于10",
+					},
+					{
+						left = {
+							detect = "Melee.TransformRestore",
+						},
+						comparison = ">=",
+						right = {
+							value = 60,
+						},
+						remark = "变形可恢复60能量",
+					},
+					{
+						left = {
+							detect = "Common.Mana",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 400,
+						},
+						remark = "有400法力值",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无节能施法效果",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "重整",
+						},
+					},
+				},
+				remark = "能量低于10时用重整",
+			},
+			{
+				name = "不足扫击用重整",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							detect = "Common.SpellConsume",
+							options = {
+								spell = "扫击",
+							},
+						},
+						remark = "能量不足扫击",
+					},
+					{
+						left = {
+							detect = "Common.TimeInterval",
+							options = {
+								name = "猛虎之怒",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 9,
+						},
+						remark = "与上次使用猛虎之怒已过去9秒以上；9s以上：猛虎已经完成应有的收益，这时只要变身不亏能量就值得变。",
+					},
+					{
+						left = {
+							detect = "Melee.TransformRestore",
+						},
+						comparison = ">=",
+						right = {
+							value = 60,
+						},
+						remark = "变形可恢复60能量",
+					},
+					{
+						left = {
+							detect = "Common.Mana",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 400,
+						},
+						remark = "有400法力值",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无节能施法效果",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "重整",
+						},
+					},
+				},
+				remark = "不足扫击用重整",
+			},
+			{
+				name = "不足撕碎用重整",
+				conditions = {
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							detect = "Common.SpellConsume",
+							options = {
+								spell = "撕碎",
+								attach = -20,
+							},
+						},
+						remark = "能量不足一次撕碎，且扣掉1秒回能20能量",
+					},
+					{
+						left = {
+							detect = "Common.CanBleed",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "目标不可流血",
+					},
+					{
+						left = {
+							detect = "Melee.IsBehind",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "在目标背后",
+					},
+					{
+						left = {
+							detect = "Melee.ComboPoints",
+						},
+						comparison = "<",
+						right = {
+							value = 5,
+						},
+						remark = "连击点少于5点",
+					},
+					{
+						left = {
+							detect = "Melee.TransformRestore",
+						},
+						comparison = ">=",
+						right = {
+							value = 60,
+						},
+						remark = "变形可恢复60能量",
+					},
+					{
+						left = {
+							detect = "Common.Mana",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 400,
+						},
+						remark = "有400法力",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无节能施法",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "重整",
+						},
+					},
+				},
+				remark = "能量不足撕碎时用重整",
+			},
+			{
+				name = "补猛虎之怒",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "猛虎之怒",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无猛虎之怒"
+					},
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							detect = "Melee.TransformRestore",
+						},
+						remark = "当前能量有相当于变形恢复数及以上"
+					},
+					{
+						left = {
+							detect = "Common.CanBleed",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标可流血",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "猛虎之怒",
+						},
+					},
+					{
+						action = "Common.RecordTime",
+						options = {
+							name =  "猛虎之怒",
+						},
+						remark = "猛虎之怒使用计时",
+					},
+				},
+				remark = "使用重整会让猛虎之怒消失，但是不会让血之狂暴消失",
+			},
+			{
+				name = "补血之狂暴",
+				conditions = {
+					{
+						left = {
+							detect= "Common.TalentRank",
+							options = {
+								tab = 2,
+								talent = 12,
+							},
+							remark = "取血之狂暴天赋点数",
+						},
+						comparison = ">",
+						right = {
+							value = 0,
+						},
+						remark = "点了血之狂暴天赋，使用猛虎之怒才会获得血之狂暴效果",
+					},
+					{
+						left = {
+							detect= "Common.HasBuff",
+							options = {
+								buff = "血之狂暴",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无血之狂暴",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "猛虎之怒",
+						},
+					},
+					{
+						action = "Common.RecordTime",
+						options = {
+							name = "猛虎之怒",
+						},
+						remark = "猛虎之怒使用计时",
+					},
+				},
+			},
+			{
+				name = "有节能用撕碎",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "节能施法",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有节能施法",
+					},
+					{
+						left = {
+							detect = "Melee.IsBehind",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "在目标背后",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "撕碎",
+						},
+					},
+				},
+				remark = "有节能且在目标背后用撕碎"
+			},
+			{
+				name = "补精灵火",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "精灵之火（野性）",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "目标无自己的精灵火",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "精灵之火（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "精灵火无冷却",
+					},
+					{
+						left = {
+							detect = "Common.IsBoss",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标是BOSS",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "精灵之火（野性）",
+						},
+					},
+				},
+				remark = "对BOSS补精灵火",
+			},
+			{
+				name = "补撕扯",
+				conditions = {
+					{
+						left = {
+							detect = "Common.CanCurse",
+							options = {
+								buff = "撕扯",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标无自己的撕扯",
+					},
+					{
+						left = {
+							detect = "Common.CanBleed",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标可流血",
+					},
+					{
+						left = {
+							detect = "Melee.ComboPoints",
+						},
+						comparison = "=",
+						right = {
+							value = 5,
+						},
+						remark = "有5连击点",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "撕扯",
+						},
+					},
+				},
+				remark = "补撕扯",
+			},
+			{
+				name = "刷新流血",
+				conditions = {
+					{
+						left = {
+							detect = "Melee.ComboPoints",
+						},
+						comparison = "=",
+						right = {
+							value = 5,
+						},
+						remark = "有5连击点，确保（每个连击点20% * 5）刷新流血",
+					},
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 70,
+						},
+						remark = "能量低于70，高于70能量先打个爪击再凶猛伤害更高（凶猛撕咬会将除技能消耗外的其它能量转化为额外伤害）",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "凶猛撕咬",
+						},
+					},
+				},
+				remark = "使用凶猛撕咬刷新流血时长",
+			},
+			{
+				name = "补扫击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.CanCurse",
+							options = {
+								buff = "扫击",
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标无自己的扫击",
+					},
+					{
+						left = {
+							detect = "Common.CanBleed",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标可流血",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "强化攻击",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "无强化攻击效果",
+					}
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "扫击",
+						},
+					},
+				},
+				remark = "补扫击效果",
+			},
+			{
+				name = "背刺",
+				conditions = {
+					{
+						left = {
+							detect = "Melee.IsBehind",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "在目标在背后",
+					},
+					{
+						left = {
+							detect = "Common.SpellConsume",
+							options = {
+								spell = "撕碎",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 49,
+						},						
+						remark = "撕碎能量消耗过多，收益不如爪击",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "强化攻击",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "有强化攻击效果（T2.5）",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">=",
+						right = {
+							value = 60,
+						},
+						remark = "或有60能量及以上，快溢出",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "撕裂神像",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "或有撕裂神像效果",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.CanBleed",
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "或不可流血；爪击不享受迸裂创伤",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "撕碎",
+						},
+					},
+				},
+				remark = "在目标背后用撕碎",
+			},
+			{
+				name = "骗节能",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "精灵之火（野性）",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "精灵火无冷却",
+					},
+					{
+						left = {
+							detect = "Common.Energy",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = {
+							value = 20,
+						},
+						remark = "能量低于20",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "精灵之火（野性）",
+						},
+					},
+				},
+				remark = "使用精灵火骗节能",
+			},
+			{
+				name = "攒星",
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "爪击",
+						},
+					},
+				},
+			},
+		},
+		remark = "猫德一键输出",
+		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-EoADAaDSQIFQB-Ao \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030473292350208",
+	},
+}

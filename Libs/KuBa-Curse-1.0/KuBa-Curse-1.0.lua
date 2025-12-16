@@ -1,0 +1,977 @@
+--[[
+Name: KuBa-Curse-1.0
+Revision: $Rev: 10001 $
+Author(s): 树先生 (xhwsd@qq.com)
+Website: https://github.com/kuba
+Description: 跟踪自身对目标施放的减益类库。
+Dependencies: AceDebug-2.0, AceEvent-2.0, SpellCache-1.0
+]]
+
+--[[
+代码参考至[Cursive](https://github.com/pepopo978/Cursive)，特此鸣谢！
+2025-4-9 基于SuperWoW实现减益跟踪
+]]
+
+-- 未安装SuperWoW
+-- https://github.com/balakethelock/SuperWoW/wiki/Features
+if not SUPERWOW_VERSION then
+	DEFAULT_CHAT_FRAME:AddMessage("未检测到SuperWoW");
+	return
+end
+
+-- 主要版本
+local MAJOR_VERSION = "KuBa-Curse-1.0"
+-- 次要版本
+local MINOR_VERSION = "$Revision: 10001 $"
+
+-- 检验AceLibrary
+if not AceLibrary then
+	error(MAJOR_VERSION .. " requires AceLibrary")
+end
+
+-- 检验版本（本库，单实例）
+if not AceLibrary:IsNewVersion(MAJOR_VERSION, MINOR_VERSION) then
+	return
+end
+
+-- 检查依赖库
+---@param dependencies table 依赖库名称列表
+local function CheckDependency(dependencies)
+	for _, value in ipairs(dependencies) do
+		if not AceLibrary:HasInstance(value) then
+			error(format("%s requires %s to function properly", MAJOR_VERSION, value))
+		end
+	end
+end
+
+CheckDependency({
+	-- 调试
+	"AceDebug-2.0",
+	-- 事件
+	"AceEvent-2.0",
+	-- 法术缓存
+	"SpellCache-1.0",
+})
+
+-- 法术缓存
+local SpellCache = AceLibrary("SpellCache-1.0")
+
+-- 各职业欲跟踪法术信息
+local TRACK_SPELLS = {
+	-- 德鲁伊
+	["DRUID"] = {
+		[339] = { name = "纠缠根须", rank = 1, duration = 12 },
+		[1062] = { name = "纠缠根须", rank = 2, duration = 15 },
+		[5195] = { name = "纠缠根须", rank = 3, duration = 18 },
+		[5196] = { name = "纠缠根须", rank = 4, duration = 21 },
+		[9852] = { name = "纠缠根须", rank = 5, duration = 24 },
+		[9853] = { name = "纠缠根须", rank = 6, duration = 27 },
+
+		[700] = { name = "沉睡", rank = 1, duration = 20 },
+		[1090] = { name = "沉睡", rank = 2, duration = 30 },
+		[2937] = { name = "沉睡", rank = 3, duration = 40 },
+
+		[770] = { name = "精灵之火", rank = 1, duration = 40 },
+		[778] = { name = "精灵之火", rank = 2, duration = 40 },
+		[9749] = { name = "精灵之火", rank = 3, duration = 40 },
+		[9907] = { name = "精灵之火", rank = 4, duration = 40 },
+
+		[16855] = { name = "精灵之火（熊）", rank = 1, duration = 40 },
+		[17387] = { name = "精灵之火（熊）", rank = 2, duration = 40 },
+		[17388] = { name = "精灵之火（熊）", rank = 3, duration = 40 },
+		[17389] = { name = "精灵之火（熊）", rank = 4, duration = 40 },
+
+		[16857] = { name = "精灵之火（野性）", rank = 1, duration = 40 },
+		[17390] = { name = "精灵之火（野性）", rank = 2, duration = 40 },
+		[17391] = { name = "精灵之火（野性）", rank = 3, duration = 40 },
+		[17392] = { name = "精灵之火（野性）", rank = 4, duration = 40 },
+
+		[2637] = { name = "休眠", rank = 1, duration = 20 },
+		[18657] = { name = "休眠", rank = 2, duration = 30 },
+		[18658] = { name = "休眠", rank = 3, duration = 40 },
+
+		[5570] = { name = "虫群", rank = 1, duration = 18, variableDuration = true },
+		[24974] = { name = "虫群", rank = 2, duration = 18, variableDuration = true },
+		[24975] = { name = "虫群", rank = 3, duration = 18, variableDuration = true },
+		[24976] = { name = "虫群", rank = 4, duration = 18, variableDuration = true },
+		[24977] = { name = "虫群", rank = 5, duration = 18, variableDuration = true },
+
+		[8921] = { name = "月火术", rank = 1, duration = 9, variableDuration = true },
+		[8924] = { name = "月火术", rank = 2, duration = 18, variableDuration = true },
+		[8925] = { name = "月火术", rank = 3, duration = 18, variableDuration = true },
+		[8926] = { name = "月火术", rank = 4, duration = 18, variableDuration = true },
+		[8927] = { name = "月火术", rank = 5, duration = 18, variableDuration = true },
+		[8928] = { name = "月火术", rank = 6, duration = 18, variableDuration = true },
+		[8929] = { name = "月火术", rank = 7, duration = 18, variableDuration = true },
+		[9833] = { name = "月火术", rank = 8, duration = 18, variableDuration = true },
+		[9834] = { name = "月火术", rank = 9, duration = 18, variableDuration = true },
+		[9835] = { name = "月火术", rank = 10, duration = 18, variableDuration = true },
+
+		[1822] = { name = "扫击", rank = 1, duration = 9, variableDuration = true },
+		[1823] = { name = "扫击", rank = 2, duration = 9, variableDuration = true },
+		[1824] = { name = "扫击", rank = 3, duration = 9, variableDuration = true },
+		[9904] = { name = "扫击", rank = 4, duration = 9, variableDuration = true },
+
+		[1079] = { name = "撕扯", rank = 1, duration = 12, variableDuration = true },
+		[9492] = { name = "撕扯", rank = 2, duration = 12, variableDuration = true },
+		[9493] = { name = "撕扯", rank = 3, duration = 12, variableDuration = true },
+		[9752] = { name = "撕扯", rank = 4, duration = 12, variableDuration = true },
+		[9894] = { name = "撕扯", rank = 5, duration = 12, variableDuration = true },
+		[9896] = { name = "撕扯", rank = 6, duration = 12, variableDuration = true },
+
+		[2908] = { name = "安抚动物", rank = 1, duration = 15 },
+		[8955] = { name = "安抚动物", rank = 2, duration = 15 },
+		[9901] = { name = "安抚动物", rank = 3, duration = 15 },
+
+		[5211] = { name = "重击", rank = 1, duration = 2 },
+		[6798] = { name = "重击", rank = 2, duration = 3 },
+		[8983] = { name = "重击", rank = 3, duration = 4 },
+
+		[99] = { name = "挫志咆哮", rank = 1, duration = 30 },
+		[1735] = { name = "挫志咆哮", rank = 2, duration = 30 },
+		[9490] = { name = "挫志咆哮", rank = 3, duration = 30 },
+		[9747] = { name = "挫志咆哮", rank = 4, duration = 30 },
+		[9898] = { name = "挫志咆哮", rank = 5, duration = 30 },
+
+		[5209] = { name = "挑战咆哮", rank = 1, duration = 6 },
+	},
+	-- 猎人
+	["HUNTER"] = {
+		[3043] = { name = "毒蝎钉刺", rank = 1, duration = 20 },
+		[14275] = { name = "毒蝎钉刺", rank = 2, duration = 20 },
+		[14276] = { name = "毒蝎钉刺", rank = 3, duration = 20 },
+		[14277] = { name = "毒蝎钉刺", rank = 4, duration = 20 },
+
+		[1978] = { name = "毒蛇钉刺", rank = 1, duration = 15 },
+		[13549] = { name = "毒蛇钉刺", rank = 2, duration = 15 },
+		[13550] = { name = "毒蛇钉刺", rank = 3, duration = 15 },
+		[13551] = { name = "毒蛇钉刺", rank = 4, duration = 15 },
+		[13552] = { name = "毒蛇钉刺", rank = 5, duration = 15 },
+		[13553] = { name = "毒蛇钉刺", rank = 6, duration = 15 },
+		[13554] = { name = "毒蛇钉刺", rank = 7, duration = 15 },
+		[13555] = { name = "毒蛇钉刺", rank = 8, duration = 15 },
+		[25295] = { name = "毒蛇钉刺", rank = 9, duration = 15 },
+
+		[3034] = { name = "蝰蛇钉刺", rank = 1, duration = 8 },
+		[14279] = { name = "蝰蛇钉刺", rank = 2, duration = 8 },
+		[14280] = { name = "蝰蛇钉刺", rank = 3, duration = 8 },
+
+		[2974] = { name = "摔绊", rank = 1, duration = 10 },
+		[14267] = { name = "摔绊", rank = 2, duration = 10 },
+		[14268] = { name = "摔绊", rank = 3, duration = 10 },
+
+		[5116] = { name = "震荡射击", rank = 1, duration = 4 },
+
+		[19386] = { name = "翼龙钉刺", rank = 1, duration = 12 },
+		[24132] = { name = "翼龙钉刺", rank = 2, duration = 12 },
+		[24133] = { name = "翼龙钉刺", rank = 3, duration = 12 },
+
+		[19306] = { name = "反击", rank = 1, duration = 5 },
+		[20909] = { name = "反击", rank = 2, duration = 5 },
+		[20910] = { name = "反击", rank = 3, duration = 5 },
+
+		[1130] = { name = "猎人印记", rank = 1, duration = 120 },
+		[14323] = { name = "猎人印记", rank = 2, duration = 120 },
+		[14324] = { name = "猎人印记", rank = 3, duration = 120 },
+		[14325] = { name = "猎人印记", rank = 4, duration = 120 },
+	},
+	-- 法师
+	["MAGE"] = {
+		[118] = { name = "变形术", rank = 1, duration = 20 },
+		[12824] = { name = "变形术", rank = 2, duration = 30 },
+		[12825] = { name = "变形术", rank = 3, duration = 40 },
+		[12826] = { name = "变形术", rank = 4, duration = 50 },
+
+		[28270] = { name = "变形术：奶牛", rank = 1, duration = 50 },
+		[28271] = { name = "变形术：龟", rank = 1, duration = 50 },
+		[28272] = { name = "变形术：猪", rank = 1, duration = 50 },
+	},
+	-- 圣骑士
+	["PALADIN"] = {},
+	-- 牧师
+	["PRIEST"] = {
+		[1425] = { name = "束缚亡灵", rank = 1, duration = 30 },
+		[9486] = { name = "束缚亡灵", rank = 2, duration = 40 },
+		[10956] = { name = "束缚亡灵", rank = 3, duration = 50 },
+
+		[453] = { name =  "安抚心灵", rank = 1, duration = 15 },
+		[8192] = { name =  "安抚心灵", rank = 2, duration = 15 },
+		[10953] = { name =  "安抚心灵", rank = 3, duration = 15 },
+
+		[605] = { name = "心灵控制", rank = 1, duration = 60 },
+		[10911] = { name = "心灵控制", rank = 2, duration = 30 },
+		[10912] = { name = "心灵控制", rank = 3, duration = 30 },
+
+		[2944] = { name = "吞噬瘟疫", rank = 1, duration = 24 },
+		[19276] = { name = "吞噬瘟疫", rank = 2, duration = 24 },
+		[19277] = { name = "吞噬瘟疫", rank = 3, duration = 24 },
+		[19278] = { name = "吞噬瘟疫", rank = 4, duration = 24 },
+		[19279] = { name = "吞噬瘟疫", rank = 5, duration = 24 },
+		[19280] = { name = "吞噬瘟疫", rank = 6, duration = 24 },
+
+		[9035] = { name = "虚弱妖术", rank = 1, duration = 120 },
+		[19281] = { name = "虚弱妖术", rank = 2, duration = 120 },
+		[19282] = { name = "虚弱妖术", rank = 3, duration = 120 },
+		[19283] = { name = "虚弱妖术", rank = 4, duration = 120 },
+		[19284] = { name = "虚弱妖术", rank = 5, duration = 120 },
+		[19285] = { name = "虚弱妖术", rank = 6, duration = 120 },
+
+		[589] = { name = "暗言术：痛", rank = 1, duration = 24 },  -- assume they have talent
+		[594] = { name = "暗言术：痛", rank = 2, duration = 24 },
+		[970] = { name = "暗言术：痛", rank = 3, duration = 24 },
+		[992] = { name = "暗言术：痛", rank = 4, duration = 24 },
+		[2767] = { name = "暗言术：痛", rank = 5, duration = 24 },
+		[10892] = { name = "暗言术：痛", rank = 6, duration = 24 },
+		[10893] = { name = "暗言术：痛", rank = 7, duration = 24 },
+		[10894] = { name = "暗言术：痛", rank = 8, duration = 24 },
+
+		[15286] = { name = "吸血鬼的拥抱", rank = 1, duration = 60 },
+
+		[14914] = { name = "神圣之火", rank = 1, duration = 10 },
+		[15262] = { name = "神圣之火", rank = 2, duration = 10 },
+		[15263] = { name = "神圣之火", rank = 3, duration = 10 },
+		[15264] = { name = "神圣之火", rank = 4, duration = 10 },
+		[15265] = { name = "神圣之火", rank = 5, duration = 10 },
+		[15266] = { name = "神圣之火", rank = 6, duration = 10 },
+		[15267] = { name = "神圣之火", rank = 7, duration = 10 },
+		[15261] = { name = "神圣之火", rank = 8, duration = 10 },
+	},
+	-- 盗贼
+	["ROGUE"] = {
+		[2094] = { name = "致盲", rank = 1, duration = 10 },
+		[21060] = { name = "致盲", rank = 1, duration = 10 },
+
+		[6770] = { name = "闷棍", rank = 1, duration = 25 },
+		[2070] = { name = "闷棍", rank = 2, duration = 35 },
+		[11297] = { name = "闷棍", rank = 3, duration = 45 },
+
+		[1776] = { name = "凿击", rank = 1, duration = 4 },
+		[1777] = { name = "凿击", rank = 2, duration = 4 },
+		[8629] = { name = "凿击", rank = 3, duration = 4 },
+		[11285] = { name = "凿击", rank = 4, duration = 4 },
+		[11286] = { name = "凿击", rank = 5, duration = 4 },
+
+		[8647] = { name = "破甲", rank = 1, duration = 30 }, -- this is a shared debuff but almost always only done by 1 rogue
+		[8649] = { name = "破甲", rank = 2, duration = 30 },
+		[8650] = { name = "破甲", rank = 3, duration = 30 },
+		[11197] = { name = "破甲", rank = 4, duration = 30 },
+		[11198] = { name = "破甲", rank = 5, duration = 30 },
+
+		[703] = { name = "锁喉", rank = 1, duration = 18 },
+		[8631] = { name = "锁喉", rank = 2, duration = 18 },
+		[8632] = { name = "锁喉", rank = 3, duration = 18 },
+		[8633] = { name = "锁喉", rank = 4, duration = 18 },
+		[11289] = { name = "锁喉", rank = 5, duration = 18 },
+		[11290] = { name = "锁喉", rank = 6, duration = 18 },
+
+		[2818] = { name = "致命毒药", rank = 1, duration = 12 },
+		[2819] = { name = "致命毒药 II", rank = 2, duration = 12 },
+		[11353] = { name = "致命毒药 III", rank = 3, duration = 12 },
+		[11354] = { name = "致命毒药 IV", rank = 4, duration = 12 },
+		[25349] = { name = "致命毒药 V", rank = 5, duration = 12 },
+
+		[16511] = { name = "出血", rank = 1, duration = 15 },
+	},
+	-- 萨满祭司
+	["SHAMAN"] = {
+		[8050] = { name = "烈焰震击", rank = 1, duration = 12, variableDuration = true },
+		[8052] = { name = "烈焰震击", rank = 2, duration = 12, variableDuration = true },
+		[8053] = { name = "烈焰震击", rank = 3, duration = 12, variableDuration = true },
+		[10447] = { name = "烈焰震击", rank = 4, duration = 12, variableDuration = true },
+		[10448] = { name = "烈焰震击", rank = 5, duration = 12, variableDuration = true },
+		[29228] = { name = "烈焰震击", rank = 6, duration = 12, variableDuration = true },
+	},
+	-- 术士
+	["WARLOCK"] = {
+		[172] = { name =  "腐蚀术", rank = 1, duration = 12, variableDuration = true, darkHarvest = true, numTicks = 4 },
+		[6222] = { name =  "腐蚀术", rank = 2, duration = 15, variableDuration = true, darkHarvest = true, numTicks = 5 },
+		[6223] = { name =  "腐蚀术", rank = 3, duration = 18, variableDuration = true, darkHarvest = true, numTicks = 6 },
+		[7648] = { name =  "腐蚀术", rank = 4, duration = 18, variableDuration = true, darkHarvest = true, numTicks = 6 },
+		[11671] = { name =  "腐蚀术", rank = 5, duration = 18, variableDuration = true, darkHarvest = true, numTicks = 6 },
+		[11672] = { name =  "腐蚀术", rank = 6, duration = 18, variableDuration = true, darkHarvest = true, numTicks = 6 },
+		[25311] = { name =  "腐蚀术", rank = 7, duration = 18, variableDuration = true, darkHarvest = true, numTicks = 6 },
+
+		[980] = { name = "痛苦诅咒", rank = 1, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+		[1014] = { name = "痛苦诅咒", rank = 2, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+		[6217] = { name = "痛苦诅咒", rank = 3, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+		[11711] = { name = "痛苦诅咒", rank = 4, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+		[11712] = { name = "痛苦诅咒", rank = 5, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+		[11713] = { name = "痛苦诅咒", rank = 6, duration = 24, variableDuration = true, darkHarvest = true, numTicks = 12 },
+
+		[18265] = { name = "生命虹吸", rank = 1, duration = 30, variableDuration = true, darkHarvest = true, numTicks = 10 },
+		[18879] = { name = "生命虹吸", rank = 2, duration = 30, variableDuration = true, darkHarvest = true, numTicks = 10 },
+		[18880] = { name = "生命虹吸", rank = 3, duration = 30, variableDuration = true, darkHarvest = true, numTicks = 10 },
+		[18881] = { name = "生命虹吸", rank = 4, duration = 30, variableDuration = true, darkHarvest = true, numTicks = 10 },
+
+		[52550] = { name = "黑暗收割", rank = 1, duration = 8, variableDuration = true },
+		[52551] = { name = "黑暗收割", rank = 2, duration = 8, variableDuration = true },
+		[52552] = { name = "黑暗收割", rank = 3, duration = 8, variableDuration = true },
+
+		[603] = { name = "末日诅咒", rank = 1, duration = 60 },
+
+		[704] = { name = "鲁莽诅咒", rank = 1, duration = 120 },
+		[7658] = { name = "鲁莽诅咒", rank = 2, duration = 120 },
+		[7659] = { name = "鲁莽诅咒", rank = 3, duration = 120 },
+		[11717] = { name = "鲁莽诅咒", rank = 4, duration = 120 },
+
+		[17862] = { name = "暗影诅咒", rank = 1, duration = 300 },
+		[17937] = { name = "暗影诅咒", rank = 2, duration = 300 },
+
+		[1490] = { name = "元素诅咒", rank = 1, duration = 300 },
+		[11721] = { name = "元素诅咒", rank = 2, duration = 300 },
+		[11722] = { name = "元素诅咒", rank = 3, duration = 300 },
+
+		[1714] = { name = "语言诅咒", rank = 1, duration = 30 },
+		[11719] = { name = "语言诅咒", rank = 2, duration = 30 },
+
+		[702] = { name = "虚弱诅咒", rank = 1, duration = 120 },
+		[1108] = { name = "虚弱诅咒", rank = 2, duration = 120 },
+		[6205] = { name = "虚弱诅咒", rank = 3, duration = 120 },
+		[7646] = { name = "虚弱诅咒", rank = 4, duration = 120 },
+		[11707] = { name = "虚弱诅咒", rank = 5, duration = 120 },
+		[11708] = { name = "虚弱诅咒", rank = 6, duration = 120 },
+
+		[18223] = { name = "疲劳诅咒", rank = 1, duration = 12 },
+
+		[348] = { name = "献祭", rank = 1, duration = 15 },
+		[707] = { name = "献祭", rank = 2, duration = 15 },
+		[1094] = { name = "献祭", rank = 3, duration = 15 },
+		[2941] = { name = "献祭", rank = 4, duration = 15 },
+		[11665] = { name = "献祭", rank = 5, duration = 15 },
+		[11667] = { name = "献祭", rank = 6, duration = 15 },
+		[11668] = { name = "献祭", rank = 7, duration = 15 },
+		[25309] = { name = "献祭", rank = 8, duration = 15 },
+
+		[6789] = { name = "死亡缠绕", rank = 1, duration = 3 },
+		[17925] = { name = "死亡缠绕", rank = 2, duration = 3 },
+		[17926] = { name = "死亡缠绕", rank = 3, duration = 3 },
+
+		[710] = { name = "放逐", rank = 1, duration = 20 },
+		[18647] = { name = "放逐", rank = 2, duration = 30 },
+
+		[5782] = { name = "恐惧", rank = 1, duration = 10 },
+		[6213] = { name = "恐惧", rank = 2, duration = 15 },
+		[6215] = { name = "恐惧", rank = 3, duration = 20 },
+	},
+	-- 战士
+	["WARRIOR"] = {
+		[772] = { name = L["rend"], rank = 1, duration = 9 },
+		[6546] = { name = L["rend"], rank = 2, duration = 12 },
+		[6547] = { name = L["rend"], rank = 3, duration = 15 },
+		[6548] = { name = L["rend"], rank = 4, duration = 18 },
+		[11572] = { name = L["rend"], rank = 5, duration = 21 },
+		[11573] = { name = L["rend"], rank = 6, duration = 21 },
+		[11574] = { name = L["rend"], rank = 7, duration = 21 },
+	},
+	-- 其它
+	["OTHER"] = {
+		-- 精灵之火
+		faeriefire = {
+			[770] = { name = "精灵之火", rank = 1, duration = 40 },
+			[778] = { name = "精灵之火", rank = 2, duration = 40 },
+			[9749] = { name = "精灵之火", rank = 3, duration = 40 },
+			[9907] = { name = "精灵之火", rank = 4, duration = 40 },
+
+			[16855] = { name = "精灵之火", rank = 1, duration = 40 }, -- use faerie fire instead of (bear) version so they block each other
+			[17387] = { name = "精灵之火", rank = 2, duration = 40 },
+			[17388] = { name = "精灵之火", rank = 3, duration = 40 },
+			[17389] = { name = "精灵之火", rank = 4, duration = 40 },
+
+			[16857] = { name = "精灵之火", rank = 1, duration = 40 }, -- use faerie fire instead of (feral) version so they block each other
+			[17390] = { name = "精灵之火", rank = 2, duration = 40 },
+			[17391] = { name = "精灵之火", rank = 3, duration = 40 },
+			[17392] = { name = "精灵之火", rank = 4, duration = 40 },
+		}
+	}
+}
+-- 术士的燃烧法术名称
+local CONFLAGRATE_NAME = "燃烧"
+-- 术士的燃烧法术标识
+local CONFLAGRATE_IDS = {
+	-- 燃烧(等级 1)
+	[17962] = true,
+	-- 燃烧(等级 2)
+	[18930] = true,
+	-- 燃烧(等级 3)
+	[18931] = true,
+	-- 燃烧(等级 4)
+	[18932] = true,
+}
+-- 术士的暗影收割法术名称
+local DARK_HARVEST_NAME = "暗影收割"
+-- 术士的暗影收割法术标识
+local DARK_HARVEST_IDS = {
+	-- 暗影收割(等级 1)
+	[52550] = true,
+	-- 暗影收割(等级 2)
+	[52551] = true,
+	-- 暗影收割(等级 3)
+	[52552] = true,
+}
+-- 术士的献祭法术名称
+local IMMOLATE_NAME = "献祭"
+-- 造成有害匹配文本
+local DAMAGE_PATTERNS = {
+	"你的(.+)被(.+)抵抗了",
+	"你的(.+)被(.+)招架了",
+	"你的(.+)没有击中(.+)",
+	"你的(.+)被(.+)躲闪过去了",
+	"你的(.+)被(.+)格挡了",
+	"你的(.+)施放失败。(.+)对此免疫",
+}
+-- 光环消失匹配文本
+local AURA_PATTERNS = {
+	"(.+)效果从(.+)身上消失"
+}
+-- 持续时间匹配文本
+local DURATION_PATTERNS = {
+	-- 腐蚀术：腐蚀目标，在18.69秒内造成累计828到834点伤害。
+	-- 虫群：敌人被飞虫围绕，攻击命中率降低2%，在18秒内受到总计99点自然伤害。
+	"在(%d+%.?%d*)秒",
+	-- 精灵之火：使目标的护甲降低175点，持续40秒。在效果持续期间，目标无法潜行或隐形。
+	-- 驱毒术：尝试驱散目标身上的1个中毒效果，并每2秒驱散1个中毒效果，持续8秒。
+	"持续(%d+%.?%d*)秒"
+}
+
+-- 跟踪自身对目标施放的减益类库。
+---@class KuBa-Curse-1.0:AceDebug-2.0,AceEvent-2.0
+---@field spellIdToInfos table 法术标识到法术信息；键为法术标识，值为法术信息
+---@field spellTextToIndexs table 法术名称到插槽索引；键为完整法术名称，值为法术标识
+---@field spellNameToTextures table 法术名称到法术纹理；键为法术名称（不含等级），值为法术纹理
+---@field pendingCast table 待定施法数据
+---@field darkHarvestData table 暗影收割数据
+---@field isChanneling boolean 是否正在引导
+---@field targetGuid string 最后施法目标标识
+---@field targetGuids table 效果生效的目标标识
+local Library = {}
+
+--------------------------------
+
+-- 提示帧
+local tooltip = getglobal("KuBaTooltip") or CreateFrame("GameTooltip", "KuBaTooltip", UIParent, "GameTooltipTemplate")
+
+-- 引导开始
+function Library:SPELLCAST_CHANNEL_START()
+	self.isChanneling = true
+end
+
+-- 引导停止
+function Library:SPELLCAST_CHANNEL_STOP()
+	self.isChanneling = false
+end
+
+-- 施法事件
+---@param casterGuid string 施法者标识
+---@param targetGuid string 目标标识
+---@param event string 事件类型；可选值："START", "CAST", "FAIL", "CHANNEL", "MAINHAND", "OFFHAND"
+---@param spellId number 法术标识
+---@param castDuration number 施放持续时间
+function Library:UNIT_CASTEVENT(casterGuid, targetGuid, event, spellId, castDuration)
+	self:LevelDebug(3, "UNIT_CASTEVENT：", casterGuid, targetGuid, event, spellId, castDuration)
+
+	-- 非自身施法
+	local _, playerGuid = UnitExists("player")
+	if casterGuid ~= playerGuid then
+		return
+	end
+
+	-- 献祭会触发 START 和 CAST
+	if event == "START" then -- 施法开始
+		-- 需要跟踪法术
+		if self.spellIdToInfos[spellId] then
+			-- 存储待定施法
+			self.pendingCast = {
+				spellId = spellId,
+				targetGuid = targetGuid,
+				castDuration = castDuration
+			}
+		end
+	elseif event == "CAST" then -- 施法结束(瞬间施法)
+		-- 存储待定施法
+		self.pendingCast = {
+			spellId = spellId,
+			targetGuid = targetGuid,
+			castDuration = castDuration
+		}
+
+		-- 需要跟踪法术
+		if self.spellIdToInfos[spellId] then
+			self.targetGuid = targetGuid
+			self:ScheduleEvent(
+				"ApplyDebuff" .. targetGuid .. self.spellIdToInfos[spellId].name,
+				self.ApplyDebuff,
+				0.2,
+				self,
+				spellId,
+				targetGuid,
+				GetTime()
+			)
+		elseif CONFLAGRATE_IDS[spellId] then
+			self:ScheduleEvent(
+				"UpdateDebuff" .. targetGuid .. CONFLAGRATE_NAME,
+				self.UpdateDebuff,
+				0.2,
+				self,
+				spellId,
+				targetGuid,
+				GetTime()
+			)
+		end
+	elseif event == "FAIL" then -- 施法失败
+		-- 需要跟踪法术
+		if self.spellIdToInfos[spellId] then
+			-- 清除待定施法
+			self.pendingCast = {}
+		end
+	elseif event == "CHANNEL" then -- 引导施法
+		-- 为暗影收割法术
+		if DARK_HARVEST_IDS[spellId] then
+			self.darkHarvestData = {
+				spellId = spellId,
+				targetGuid = targetGuid,
+				castDuration = self:GetSpellDuration(spellId),
+				start = GetTime()
+			}
+		end
+	end
+end
+
+-- 自身伤害法术
+---@param message string 日志消息
+function Library:CHAT_MSG_SPELL_SELF_DAMAGE(message)
+	self:LevelDebug(3, "CHAT_MSG_SPELL_SELF_DAMAGE：", message)
+
+	-- 匹配取法术名称和目标名称
+	local spellName, targetName
+	for _, pattern in ipairs(DAMAGE_PATTERNS) do
+		-- 必须定义局部变量
+		local _, _, spell, target = string.find(message, pattern)
+		if spell and target then
+			spellName = spell
+			targetName = target
+			break
+		end
+	end
+
+	-- 匹配到法术和目标
+	if spellName and targetName then
+		-- 清除待定施法
+		self.pendingCast = {}
+
+		-- 取消延时事件
+		if self.spellNameToTextures[spellName] and self.targetGuid then
+			-- 为需要跟踪法术，取消应用延时事件
+			self:CancelScheduledEvent("ApplyDebuff" .. self.targetGuid .. spellName)
+		elseif spellName == CONFLAGRATE_NAME and self.targetGuid then
+			-- 为燃烧法术，取消更新延时事件
+			self:CancelScheduledEvent("UpdateDebuff" .. self.targetGuid .. spellName)
+		end
+	end
+end
+
+-- 光环消失
+---@param message string 日志消息
+function Library:CHAT_MSG_SPELL_AURA_GONE_OTHER(message)
+	self:LevelDebug(3, "CHAT_MSG_SPELL_AURA_GONE_OTHER：", message)
+
+	-- 匹配取法术和目标
+	local spellName, targetName
+	for _, pattern in ipairs(AURA_PATTERNS) do
+		-- 必须定义局部变量
+		local _, _, spell, target = string.find(message, pattern)
+		if spell and target then
+			spellName = spell
+			targetName = target
+			break
+		end
+	end
+
+	-- 匹配到法术和目标，为需要跟踪法术
+	if spellName and targetName and self.spellNameToTextures[spellName] then
+		-- 遍历已生效的目标
+		for targetGuid, targetSpells in pairs(self.targetGuids) do
+			-- 遍历目标已生效法术
+			for targetSpell, spellData in pairs(targetSpells) do
+				-- 目标存在法术，目标已无该法术
+				if targetSpell == spellName and not self:HasDebuff(targetGuid, spellData.spellId) then
+					-- 删除目标法术
+					self:RemoveDebuff(targetGuid, spellName)
+				end
+			end
+		end
+	end
+end
+
+-- 取法术持续时间
+---@param spellId number 法术标识
+---@return number|nil seconds 持续时间
+function Library:GetSpellDuration(spellId)
+	-- 可变持续时间
+	if self.spellIdToInfos[spellId].variableDuration then
+		return self:ParseSpellDuration(spellId)
+	end
+	
+	return self.spellIdToInfos[spellId].duration
+end
+
+-- 解析法术持续时间
+---@param spellId number 法术标识
+---@return number seconds 持续时间
+function Library:ParseSpellDuration(spellId)
+	-- 法术标识到法术插槽索引
+	local spellText = self.spellIdToInfos[spellId].name .. "等级 " .. self.spellIdToInfos[spellId].rank
+	local spellIndex = self.spellTextToIndexs[spellText]
+
+	-- 有效法术插槽索引
+	if spellIndex then
+		-- 尝试从法术描述中取持续时间
+		tooltip:SetOwner(tooltip, "ANCHOR_NONE")
+		tooltip:ClearLines()
+		tooltip:SetSpell(spellIndex, BOOKTYPE_SPELL)
+		local numLines = tooltip:NumLines()
+		if numLines and numLines > 0 then
+			-- 获取最后一行
+			local text = getglobal("KuBaTooltipTextLeft" .. numLines):GetText()
+			if text then
+				for _, pattern in ipairs(DURATION_PATTERNS) do
+					local _, _, duration = string.find(text, pattern)
+					if duration then
+						---@diagnostic disable-next-line
+						return tonumber(duration)
+					end
+				end
+			end
+		end
+	end
+
+	-- 用静态持续时间
+	return self.spellIdToInfos[spellId].duration
+end
+
+-- 检验目标标识是否有减益
+---@param targetGuid string 目标标识
+---@param spellId number 法术标识
+---@return boolean has 具有返回真，否则返回假
+function Library:HasDebuff(targetGuid, spellId)
+	-- 遍历减益效果
+	for index = 1, 64 do
+		local _, _, _, id = UnitDebuff(targetGuid, index)
+		if not id then
+			-- 没有了跳出循环
+			break
+		elseif id == spellId then
+			return true
+		end
+	end
+
+	-- 遍历增益效果
+	-- 怪在减益位用完后，会用增益位来填充减益
+	for index = 1, 64 do
+		local _, _, id = UnitBuff(targetGuid, index)
+		if not id then
+			-- 没有了跳出循环
+			break
+		elseif id == spellId then
+			return true
+		end
+	end
+	return false
+end
+
+-- 应用减益
+---@param spellId number 法术标识
+---@param targetGuid string 目标标识
+---@param startTime number 开始时间
+function Library:ApplyDebuff(spellId, targetGuid, startTime)
+	-- 无需跟踪法术
+	if not self.spellIdToInfos[spellId] then
+		return
+	end
+
+	-- 清除待定施法
+	self.pendingCast = {}
+
+	local spellName = self.spellIdToInfos[spellId].name
+	local spellRank = self.spellIdToInfos[spellId].rank
+	local spellDuration = self:GetSpellDuration(spellId)
+
+	-- 初始目标对象
+	if not self.targetGuids[targetGuid] then
+		self.targetGuids[targetGuid] = {}
+	end
+
+	-- 置目标法术
+	self.targetGuids[targetGuid][spellName] = {
+		rank = spellRank,
+		duration = spellDuration,
+		start = startTime,
+		spellId = spellId,
+		targetGuid = targetGuid
+	}
+	self:LevelDebug(
+		2,
+		"应用减益；目标：%s；法术：%s；持续：%.2f",
+		UnitName(targetGuid),
+		spellName,
+		spellDuration
+	)
+end
+
+-- 更新已跟踪的减益，目前为针对燃烧法术处理
+---@param spellId number 法术标识
+---@param targetGuid string 目标标识
+---@param startTime number 开始时间
+function Library:UpdateDebuff(spellId, targetGuid, startTime)
+	-- 清除待定施法
+	self.pendingCast = {}
+
+	-- 为燃烧法术
+	if CONFLAGRATE_IDS[spellId] then
+		-- 检查目标是有献祭
+		if self:CheckGuid(IMMOLATE_NAME, targetGuid) then
+			-- 将持续时间缩短3秒
+			-- 点燃目标，造成249 到 315点火焰伤害，并消耗3秒的献祭效果来造成等量的伤害，此技能的公共冷却时间较短。
+			self.targetGuids[targetGuid][IMMOLATE_NAME].duration = self.targetGuids[targetGuid][IMMOLATE_NAME].duration - 3
+			self:LevelDebug(
+				2,
+				"更新减益；目标：%s；法术：%s；持续：%.2f",
+				UnitName(targetGuid),
+				self.targetGuids[targetGuid][IMMOLATE_NAME].name,
+				self.targetGuids[targetGuid][IMMOLATE_NAME].duration
+			)
+		end
+	end
+end
+
+-- 移除已跟踪的减益
+---@param targetGuid string 目标标识
+---@param spellName string 法术名称
+function Library:RemoveDebuff(targetGuid, spellName)
+	-- 存在目标
+	if self.targetGuids[targetGuid] then
+		-- 移除法术
+		if self.targetGuids[targetGuid][spellName] then
+			self.targetGuids[targetGuid][spellName] = nil
+			self:LevelDebug(2, "移除法术；目标：%s；法术：%s", UnitName(targetGuid), spellName)
+		end
+
+		-- 无任何法术，移除目标
+		if next(self.targetGuids[targetGuid]) == nil then
+			self.targetGuids[targetGuid] = nil
+			self:LevelDebug(2, "移除目标；目标：%s", UnitName(targetGuid))
+		end
+	end
+end
+
+-- 检验目标标识是否存在已跟踪的减益
+---@param spellName string 法术名称
+---@param targetGuid string 目标标识
+---@param minRemaining? number 最小剩余时间
+---@return boolean exist 已存在返回真，未存在返回假
+function Library:CheckGuid(spellName, targetGuid, minRemaining)
+	minRemaining = minRemaining or 0
+
+	-- 检验目标法术
+	if self.targetGuids[targetGuid] and self.targetGuids[targetGuid][spellName] then
+		local remaining = self:GetRemaining(self.targetGuids[targetGuid][spellName])
+		if remaining > minRemaining then
+			return true
+		end
+	end
+
+	-- 检查待定施法
+	if
+		self.pendingCast and
+		self.pendingCast.targetGuid == targetGuid and
+		self.pendingCast.spellId and
+		self.spellIdToInfos[self.pendingCast.spellId] and
+		self.spellIdToInfos[self.pendingCast.spellId].name == spellName
+	then
+		if name == spellName then
+			return true
+		end
+	end
+	return false
+end
+
+-- 检验目标单位是否存在已跟踪的减益
+---@param spellName string 法术名称
+---@param targetUnit string 目标标识
+---@param minRemaining? number 最小剩余时间
+---@return boolean exist 已存在返回真，未存在返回假
+function Library:CheckUnit(spellName, targetUnit, minRemaining)
+	local _, targetGuid = UnitExists(targetUnit)
+	if not targetGuid then
+		return false
+	end
+
+	return self:CheckGuid(spellName, targetGuid, minRemaining)
+end
+
+-- 取剩余时间
+---@param trackedData table 跟踪数据
+---@param showDecimals? boolean 是否显示小数
+---@return number remaining 剩余时间
+function Library:GetRemaining(trackedData, showDecimals)
+	showDecimals = showDecimals or false
+
+	-- 针对暗影收割处理
+	local dhReduction = 0
+	if self.spellIdToInfos[trackedData.spellId].darkHarvest then
+		self:TrackDarkHarvest(trackedData)
+		dhReduction = self:GetDarkHarvestReduction(trackedData)
+	end
+
+	local remaining = trackedData.duration - (GetTime() - trackedData.start) - dhReduction
+	if curseShowDecimals and remaining < 10 then
+		-- 四舍五入到小数点后1位
+		remaining = math.floor(remaining * 10) / 10
+	else
+		remaining = math.ceil(remaining)
+	end
+	return remaining
+end
+
+-- 跟踪暗影收割
+---@param trackedData table 跟踪数据
+function Library:TrackDarkHarvest(trackedData)
+	if self.darkHarvestData["targetGuid"] and self.darkHarvestData["targetGuid"] == trackedData["targetGuid"] then
+		local dhActive = false
+		-- 检查是否仍在引导
+		if self.isChanneling then
+			local dhTimeRemaining = self.darkHarvestData.castDuration - (GetTime() - self.darkHarvestData.start)
+			-- check if dh still active based on cast duration
+			if dhTimeRemaining > 0 then
+				dhActive = true
+				-- dh is active
+				if not trackedData["dhStartTime"] then
+					trackedData["dhStartTime"] = self:GetLastTickTime(trackedData) -- dh will reduce full tick duration
+				end
+			end
+		end
+		if trackedData["dhStartTime"] and dhActive == false and not trackedData["dhEndTime"] then
+			-- if dh no longer active, store end time if not already stored
+			trackedData["dhEndTime"] = GetTime()
+		end
+	end
+end
+
+-- 取暗影收割减少
+---@param trackedData table 跟踪数据
+function Library:GetDarkHarvestReduction(trackedData)
+	if trackedData["dhStartTime"] then
+		local endTime = trackedData["dhEndTime"] or GetTime()
+		local dhActiveTime = endTime - trackedData["dhStartTime"]
+		if dhActiveTime > 0 then
+			return dhActiveTime * .3 -- 30% reduction
+		end
+	end
+	return 0
+end
+
+-- 取最后跟踪时间
+---@param trackedData table 减益数据
+function Library:GetLastTickTime(trackedData)
+	local ticks = self.spellIdToInfos[trackedData.spellId].numTicks
+	if not ticks then
+		return GetTime()
+	end
+
+	local tickTime = trackedData.duration / ticks
+	-- dh won't apply to previous tick if within 20% of tick time
+	local currentTime = GetTime() + tickTime * .2
+
+	return math.floor((currentTime - trackedData.start) / tickTime) * tickTime + trackedData.start
+end
+
+--------------------------------
+
+-- 库激活
+---@param self table 库自身对象
+---@param oldLib table 旧版库对象
+---@param oldDeactivate function 旧版库停用函数
+local function activate(self, oldLib, oldDeactivate)
+	Library = self
+
+	if oldLib then
+		oldLib:UnregisterAllEvents()
+		oldLib:CancelAllScheduledEvents()
+		oldLib:UnhookAll()
+	end
+
+	if oldDeactivate then
+		oldDeactivate(oldLib)
+	end
+
+	-- 取自身职业需要跟踪法术标识
+	local _, playerClass = UnitClass("player")
+	self.spellIdToInfos = TRACK_SPELLS[playerClass]
+
+	-- 取法术插槽索引；使用 SpellCache:GetSpellData("扫击(等级 3)") 得到是 id 是有误的
+	self.spellTextToIndexs = {}
+	local spellIndex = 1
+	while true do
+		local spellName, spellRank = GetSpellName(spellIndex, BOOKTYPE_SPELL)
+		if not spellName then
+			-- 没有了
+			break
+		end
+
+		if spellRank == "" then
+			spellRank = "等级 1"
+		end
+
+		self.spellTextToIndexs[spellName .. spellRank] = spellIndex
+		spellIndex = spellIndex + 1
+	end
+
+	-- 取法术纹理
+	self.spellNameToTextures = {}
+	for spellId, spellData in pairs(self.spellIdToInfos) do
+		local _, _, spellTexture = SpellInfo(spellId)
+		self.spellNameToTextures[spellData.name] = spellTexture
+		self.spellIdToInfos[spellId].texture = spellTexture
+	end
+
+	-- 待定施法
+	self.pendingCast = {}
+	-- 暗影收割数据
+	self.darkHarvestData = {}
+	-- 是否正在引导
+	self.isChanneling = false
+	-- 最后施法目标标识
+	self.targetGuid = nil
+	-- 效果生效的目标标识
+	self.targetGuids = {}
+end
+
+-- 外部库加载
+---@param self table 库自身对象
+---@param major string 外部库主版本
+---@param instance table 外部库实例
+local function external(self, major, instance)
+	if major == "AceDebug-2.0" then
+		-- 混入调试
+		instance:embed(self)
+		-- 开启调试
+		self:SetDebugging(true)
+		-- 调试等级
+		self:SetDebugLevel(1)
+	elseif major == "AceEvent-2.0" then
+		-- 混入事件
+		instance:embed(self)
+		-- 注册事件
+		self:RegisterEvent("SPELLCAST_CHANNEL_START")
+		self:RegisterEvent("SPELLCAST_CHANNEL_STOP");
+		self:RegisterEvent("SPELLCAST_INTERRUPTED", "SPELLCAST_CHANNEL_STOP");
+		self:RegisterEvent("SPELLCAST_FAILED", "SPELLCAST_CHANNEL_STOP");
+		self:RegisterEvent("UNIT_CASTEVENT")
+		self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+		self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	end
+end
+
+-- 最终注册库
+AceLibrary:Register(Library, MAJOR_VERSION, MINOR_VERSION, activate, nil, external)
+---@diagnostic disable-next-line: cast-local-type
+Library = nil

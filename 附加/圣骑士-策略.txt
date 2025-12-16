@@ -1,0 +1,527 @@
+{
+	{
+		name = "近战奶骑",
+		rules = {
+			{
+				name = "近战攻击",
+				conditions = {
+					{
+						left = {
+							detect = "Common.CanAttack",
+							options = {
+								unit = "target",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "目标可攻击",
+					},
+				},
+				operations = {
+					{
+						action = "Common.AutoAttack",
+					},
+				},
+				continue = true,
+				remark = "开启自动近战攻击",
+			},
+			{
+				name = "圣盾术",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "player",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 70,
+						},
+						remark = "玩家损失已有70%以上",
+					},
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "圣盾术",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "圣盾术无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "圣盾术",
+							unit = "player",
+						},
+					},
+				},
+				remark = "自己低血使用圣盾术",
+			},
+			{
+				name = "打断治疗",
+				conditions = {
+					{
+						left = {
+							detect = "Common.IsCasting",
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "正在施法读条",
+					},
+					{
+						left = {
+							detect = "Common.CastAssistLosePercentage",
+						},
+						comparison = "<=",
+						right = {
+							value = 5,
+						},
+						remark = "施法协助单位损失在5%及以下",
+					},
+					{
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "圣光术",
+						},
+						remark = "正施放圣光术",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.CastSpellName",
+						},
+						comparison = "=",
+						right = {
+							value = "圣光闪现",
+						},
+						remark = "或正施放圣光闪现",
+					},
+				},
+				operations = {
+					{
+						action = "Common.StopCasting",
+					},
+					{
+						action = "Common.Prompt",
+						options = {
+							content = "打断给<{AssistName}>的<{SpellName}>",
+							type = "info",
+						},
+					},
+				},
+				remark = "打断给失血未超5%的治疗施法"
+			},
+			{
+				name = "神圣震击",
+				filter = {
+					scopes = {"raid", "party", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家范围按生命损失排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "神圣震击",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "神圣震击无冷却",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 20,
+						},
+						remark = "筛选单位损失已有20%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "筛选单位可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "神圣震击",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "如果神圣震击CD好了，自动对生命值低于80%的玩家施放神圣震击",
+			},
+			{
+				name = "智慧圣印",
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "智慧圣印",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "玩家无智慧圣印",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "智慧圣印",
+							unit = "player",
+						},
+					},
+				},
+				remark = "没圣印施放智慧圣印",
+			},
+			{
+				name = "审判",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "审判",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "审判无冷却",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "神圣制裁",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = false,
+						},
+						remark = "玩家无神圣制裁",
+					},
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "智慧圣印",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "玩家有智慧圣印",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "审判",
+						},
+					},
+				},
+				remark = "当审判CD好了且没有1.5s圣光术且有智慧圣印时打审判",
+			},
+			{
+				name = "十字军打击（狂热充能）",
+				filter = {
+					scopes = {"raid", "party", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家范围按生命损失排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter"
+							},
+						},
+						comparison = "<=",
+						right = {
+							value = 5
+						},
+						remark = "筛选单位损失在5%及以下",
+					},
+					{
+						left = {
+							detect = "Common.BuffLayers",
+							options = {
+								buff = "狂热",
+								unit = "player",
+							},
+						},
+						comparison = "<",
+						right = { 
+							value = 3,
+						},
+						remark = "玩家有3层以下的狂热效果",
+					},
+					{
+						grouping = true,
+						logical = "or",
+						left = {
+							detect = "Common.BuffSeconds",
+							options = { 
+								buff = "狂热"
+							},
+						},
+						comparison = "<=",
+						right = { 
+							value = 10,
+						},
+						remark = "或狂热效果剩余时间在10秒内"
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "十字军打击"
+						},
+					},
+				},
+				remark = "无掉血，狂热未满或即将消失时用十字军打击",
+			},
+			{
+				name = "神圣打击",
+				filter = {
+					scopes = {"raid", "party", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家范围按生命损失排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "神圣打击",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "神圣打击无冷却",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter"
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 5
+						},
+						remark = "筛选单位损失在5%以上",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "神圣打击",
+						},
+					},
+				},
+				remark = "当团员失血>5%后 且技能可用（不再查看是否有狂热的时间和层数），直接神圣打击",
+			},
+			{
+				name = "圣光闪现",
+				filter = {
+					scopes = {"raid", "party", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家范围按生命损失排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 5,
+						},
+						remark = "筛选单位损失在5%以上",
+					},   
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "筛选单位可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "圣光闪现",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "自动对血量最低的玩家施放圣光闪现",
+			},
+			{
+				name = "圣光术",
+				filter = {
+					scopes = {"raid", "party", "player"},
+					weight = "Common.HealthLosePercentage",
+					choose = "traverse",
+					limit = 5,
+					remark = "在团队、队伍、玩家范围按生命损失排序，遍历前5个",
+				},
+				conditions = {
+					{
+						left = {
+							detect = "Common.HasBuff",
+							options = {
+								buff = "神圣制裁",
+								unit = "player",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "玩家有神圣制裁",
+					},
+					{
+						left = {
+							detect = "Common.HealthLosePercentage",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = ">",
+						right = {
+							value = 35,
+						},
+						remark = "筛选单位损失有35%以上",
+					},
+					{
+						left = {
+							detect = "Heal.CanHeal",
+							options = {
+								unit = "filter",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "筛选单位可治疗",
+					},
+				},
+				operations = {
+					{
+						action = "Heal.CastHeal",
+						options = {
+							spell = "圣光术",
+							unit = "filter",
+						},
+					},
+				},
+				remark = "如果有神圣制裁1.5s圣光术buff，自动对生命值低于65%的玩家施放圣光术",
+			},
+			{
+				name = "奉献",
+				conditions = {
+					{
+						left = {
+							detect = "Common.SpellReady",
+							options = {
+								spell = "奉献",
+							},
+						},
+						comparison = "=",
+						right = {
+							value = true,
+						},
+						remark = "奉献无冷却",
+					},
+				},
+				operations = {
+					{
+						action = "Common.CastSpell",
+						options = {
+							spell = "奉献(等级 1)",
+						},
+					},
+				},
+				remark = "当所有主要技能都在CD或不需要使用时，施放奉献作为填充输出",
+			},
+		},
+		remark = "近战奶骑一键奶",
+		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtle-wow.org/paladin?points=AoaAZQVQpAYoB--FoAAAI \n参考来源：https://www.bilibili.com/opus/1057761427555614745?from=search&spm_id_from=333.337.0.0",
+	},
+}
