@@ -8,7 +8,7 @@
 
 - 基于ACE2框架开发
 - 支持所有职业和天赋
-- 支持可视化编辑
+- ~~支持可视化编辑~~
 - 支持自定义策略
 - 支持法术通报
 - 支持协助名单
@@ -17,22 +17,22 @@
 
 ## 关联依赖
 - 模组
-    - [SuperWoW](https://github.com/balakethelock/SuperWoW) 导入、导出、GUID检测等
+    - [SuperWoW](https://github.com/balakethelock/SuperWoW) 导入、导出等
     - [UnitXP_SP3](https://codeberg.org/konaka/UnitXP_SP3) 距离、视角等检测
 - 插件
-    - [Cursive](https://github.com/pepopo978/Cursive) DOT检验
-    - [BetterCharacterStats](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88349137786896896) 属性统计
-    - [BonusScanner](#) 属性统计
-    - [Attackbar](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/89166230686008064) 攻击计时条
+    - [Cursive](https://github.com/pepopo978/Cursive) DOT检测
+    - [BetterCharacterStats](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88349137786896896) 装备治疗强度等统计
+    - [BonusScanner](#) 装备治疗强度等统计
+    - [Attackbar](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/89166230686008064) 近战攻击时间等
 
 
 ## 安装使用
 - 安装插件
     - 安装依赖模组、插件等
     - [下载](https://github.com/xhwsd/OneMacro/archive/master.zip)本插件
-    - 复制本插件到客户端的`...\Interface\AddOns`目录
+    - 复制本插件到客户端`...\Interface\AddOns`目录
 - 导入策略
-    - 复制[附加](https://gitee.com/ku-ba/OneMacro/tree/main/附加)中策略到客户端的`...\imports`目录（没有则创建）
+    - 复制[附加](https://gitee.com/ku-ba/OneMacro/tree/main/附加)中需要的策略到客户端`...\imports`目录（没有则创建）
     - 小地图图标打开编辑器导入策略（依赖[SuperWoW](https://github.com/xhwsd/SuperMacro/archive/master.zip)）
 - 创建宏
     - 创建宏其代码为`/OM strategy execute <欲执行策略名>`
