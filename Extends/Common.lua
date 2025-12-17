@@ -1572,7 +1572,7 @@ function OneMacroCommon:RegisterDetects()
 				health = {
 					type = "number",
 					name = "血量",
-					default = 100000,
+					default = 0,
 					remark = "当血量高于该值时，也视为首领"
 				},
 			},

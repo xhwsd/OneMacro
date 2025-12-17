@@ -1,6 +1,6 @@
 --[[
 Name: KuBa-Boss-1.0
-Revision: $Rev: 10001 $
+Revision: $Rev: 10002 $
 Author(s): 树先生 (xhwsd@qq.com)
 Website: https://gitee.com/ku-ba
 Description: 是否是首领相关库。
@@ -10,7 +10,7 @@ Dependencies: AceLibrary
 -- 主要版本
 local MAJOR_VERSION = "KuBa-Boss-1.0"
 -- 次要版本
-local MINOR_VERSION = "$Revision: 10001 $"
+local MINOR_VERSION = "$Revision: 10002 $"
 
 -- 检验AceLibrary
 if not AceLibrary then
@@ -36,31 +36,21 @@ local BOOSS_NAMES = {
 
 ---是否为BOSS
 ---@param unit? string 单位名称；缺省为`target`
----@param health? number 血量；缺省为`100000`
+---@param health? number 血量；缺省为`0`，大于`0`将或判定血量上限
 ---@return boolean is 是否是BOSS
 function Library:Is(unit, health)
 	unit = unit or "target"
-	health = health or 100000
+	health = health or 0
 
-	-- 检查分类
+	-- 取单位分类
 	local class = UnitClassification(unit)
-	if class == "worldboss" or class == "rareelite" then
-        -- 世界首领或稀有精英
-		return true
-	end
-
-	-- 检查名字
+	-- 取单位名字
 	local name = UnitName(unit)
-	if BOOSS_NAMES[name] then
-		return true
-	end
 
-	-- 检查血量（普通BOSS通常血量远高于玩家）
-	local max = UnitHealthMax(unit)
-	if max > health then
-		return true
-	end
-	return false
+	return class == "worldboss"
+		or class == "rareelite"
+		or BOOSS_NAMES[name]
+		or (health > 0 and UnitHealthMax(unit) >= health)
 end
 
 --------------------------------
