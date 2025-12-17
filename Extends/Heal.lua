@@ -1,7 +1,7 @@
 ---@class HealExtend:AceAddon-2.0 治疗扩展模块 xhwsd@qq.com 2025-7-11
 OneMacroHeal = OneMacro:NewModule("HealExtend")
 
--- 原治疗法术信息；原施法秒数和原持续秒数
+-- 治疗法术原施法秒数和原持续秒数
 -- 非瞬发法术：`casting > 0`
 -- 瞬发法术：`casting == 0`
 -- 持续法术：`duration > 0`

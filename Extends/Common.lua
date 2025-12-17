@@ -47,8 +47,7 @@ function OneMacroCommon:RegisterWeights()
 					return percentage or 0
 				elseif OneMacroRoster:isUnit(unit) then
 					-- 名单单位
-					local success, percentage = OneMacroRoster:SwitchTarget(unit,
-						{ State, "GetHealthLosePercentage" },
+					local success, percentage = OneMacroRoster:SwitchTarget(unit, { State, "GetHealthLosePercentage" },
 						"target")
 					if success == false then
 						OneMacro:DebugError(3, percentage)
