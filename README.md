@@ -17,12 +17,12 @@
 
 ## 关联依赖
 - 模组
-    - [SuperWoW](https://github.com/balakethelock/SuperWoW) 导入、导出等
+    - [SuperWoW](https://github.com/balakethelock/SuperWoW) 策略导入导出等
     - [UnitXP_SP3](https://codeberg.org/konaka/UnitXP_SP3) 距离、视角等检测
 - 插件
     - [Cursive](https://github.com/pepopo978/Cursive) DOT检测
     - [BetterCharacterStats](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88349137786896896) 装备治疗强度等统计
-    - [BonusScanner](#) 装备治疗强度等统计
+    - ~~[BonusScanner](#) 装备治疗强度等统计~~
     - [Attackbar](https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/89166230686008064) 近战攻击时间等
 
 
