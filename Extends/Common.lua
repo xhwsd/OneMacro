@@ -1573,7 +1573,7 @@ function OneMacroCommon:RegisterDetects()
 					type = "number",
 					name = "血量",
 					default = 0,
-					remark = "当血量高于该值时，也视为首领"
+					remark = "大于0将判定血量上限也视为首领"
 				},
 			},
 			result = {

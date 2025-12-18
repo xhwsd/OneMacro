@@ -3,7 +3,7 @@ Name: KuBa-Boss-1.0
 Revision: $Rev: 10002 $
 Author(s): 树先生 (xhwsd@qq.com)
 Website: https://gitee.com/ku-ba
-Description: 是否是首领相关库。
+Description: 检验是否为首领相关库。
 Dependencies: AceLibrary
 ]]
 
@@ -22,7 +22,7 @@ if not AceLibrary:IsNewVersion(MAJOR_VERSION, MINOR_VERSION) then
 	return
 end
 
----是否是首领相关库。
+-- 检验是否为首领相关库。
 ---@class KuBa-Boss-1.0
 local Library = {}
 
@@ -34,10 +34,10 @@ local BOOSS_NAMES = {
 	["拉格纳罗斯"] = true,
 }
 
----是否为BOSS
+---是否为领
 ---@param unit? string 单位名称；缺省为`target`
----@param health? number 血量；缺省为`0`，大于`0`将或判定血量上限
----@return boolean is 是否是BOSS
+---@param health? number 血量；缺省为`0`，大于`0`将判定血量上限也视为首领
+---@return boolean is 是否
 function Library:Is(unit, health)
 	unit = unit or "target"
 	health = health or 0
