@@ -997,11 +997,11 @@
 			{
 				name = "迅捷愈合",
 				filter = {
-					scopes = {"raid", "party", "player", "target"},
+					scopes = {"player", "target", "party", "raid"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+					remark = "在玩家、目标、队伍、团队各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1059,11 +1059,11 @@
 			{
 				name = "自然迅捷",
 				filter = {
-					scopes = {"raid", "party", "player", "target"},
+					scopes = {"player", "target", "party", "raid"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+					remark = "在玩家、目标、队伍、团队各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1119,11 +1119,11 @@
 			{
 				name = "迅捷治愈",
 				filter = {
-					scopes = {"raid", "party", "player", "target"},
+					scopes = {"player", "target", "party", "raid"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+					remark = "在玩家、目标、队伍、团队各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1210,11 +1210,11 @@
 			{
 				name = "愈合",
 				filter = {
-					scopes = {"raid", "party", "player", "target"},
+					scopes = {"player", "target", "party", "raid"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+					remark = "在玩家、目标、队伍、团队各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1258,11 +1258,11 @@
 			{
 				name = "回春术",
 				filter = {
-					scopes = {"raid", "party", "player", "target"},
+					scopes = {"player", "target", "party", "raid"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在团队、队伍、玩家、目标范围按失血排序，遍历前5个",
+					remark = "在玩家、目标、队伍、团队各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1351,7 +1351,7 @@
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单范围按失血排序，遍历前5个",
+					remark = "在名单范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -1403,7 +1403,7 @@
 						buff = "愈合"
 					},
 					choose = "random",
-					remark = "在团队范围随机一个无愈合的"
+					remark = "在团队范围内随机1个"
 				},
 				conditions = {
 					{
@@ -1597,7 +1597,7 @@
 					scopes = {"team"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					remark = "在小队范围按失血排序，遍历所有",
+					remark = "在小队范围内筛选",
 				},
 				conditions = {
 					{
@@ -1658,7 +1658,7 @@
 					scopes = {"team"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					remark = "在小队范围按失血排序，遍历所有",
+					remark = "在小队范围内筛选",
 				},
 				conditions = {
 					{
@@ -1717,7 +1717,7 @@
 					scopes = {"team"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					remark = "在小队范围按失血排序，遍历所有",
+					remark = "在小队范围内筛选",
 				},
 				conditions = {
 					{
@@ -1807,7 +1807,7 @@
 					scopes = {"team"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					remark = "在小队范围按失血排序，遍历所有",
+					remark = "在小队范围内筛选",
 				},
 				conditions = {
 					{
@@ -1853,7 +1853,7 @@
 					scopes = {"team"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					remark = "在小队范围按失血排序，遍历所有",
+					remark = "在小队范围内筛选",
 				},
 				conditions = {
 					{
@@ -1942,7 +1942,7 @@
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单范围按失血排序，遍历前5个",
+					remark = "在小队范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2121,11 +2121,11 @@
 			{
 				name = "迅捷愈合",
 				filter = {
-					scopes = {"roster", "player"},
+					scopes = {"player", "roster"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单和玩家范围按失血排序，遍历前5个",
+					remark = "在玩家和名单各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2183,11 +2183,11 @@
 			{
 				name = "自然迅捷",
 				filter = {
-					scopes = {"roster", "player"},
+					scopes = {"player", "roster"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单和玩家范围按失血排序，遍历前5个",
+					remark = "在玩家和名单各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2243,11 +2243,11 @@
 			{
 				name = "迅捷治愈",
 				filter = {
-					scopes = {"roster", "player"},
+					scopes = {"player", "roster"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单和玩家范围按失血排序，遍历前5个",
+					remark = "在玩家和名单各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2334,11 +2334,11 @@
 			{
 				name = "愈合",
 				filter = {
-					scopes = {"roster", "player"},
+					scopes = {"player", "roster"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单和玩家范围按失血排序，遍历前5个",
+					remark = "在玩家和名单各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2382,11 +2382,11 @@
 			{
 				name = "回春术",
 				filter = {
-					scopes = {"roster", "player"},
+					scopes = {"player", "roster"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单和玩家范围按失血排序，遍历前5个",
+					remark = "在玩家和名单各范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2476,7 +2476,7 @@
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
 					limit = 5,
-					remark = "在名单范围按失血排序，遍历前5个",
+					remark = "在名单范围内筛选前5个",
 				},
 				conditions = {
 					{
@@ -2657,8 +2657,7 @@
 					scopes = {"player", "target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在玩家和目标范围按失血排序，遍历前5个",
+					remark = "在玩家和目标各范围内筛选",
 				},
 				conditions = {
 					{
@@ -2719,8 +2718,7 @@
 					scopes = {"player", "target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在玩家和目标范围按失血排序，遍历前5个",
+					remark = "在玩家和目标各范围内筛选",
 				},
 				conditions = {
 					{
@@ -2779,8 +2777,7 @@
 					scopes = {"player", "target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在玩家和目标范围按失血排序，遍历前5个",
+					remark = "在玩家和目标各范围内筛选",
 				},
 				conditions = {
 					{
@@ -2870,8 +2867,7 @@
 					scopes = {"player", "target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在玩家和目标范围按失血排序，遍历前5个",
+					remark = "在玩家和目标各范围内筛选",
 				},
 				conditions = {
 					{
@@ -2919,8 +2915,7 @@
 					scopes = {"player", "target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在玩家和目标范围按失血排序，遍历前5个",
+					remark = "在玩家和目标各范围内筛选",
 				},
 				conditions = {
 					{
@@ -2994,8 +2989,7 @@
 					scopes = {"target"},
 					weight = "Common.HealthLosePercentage",
 					choose = "traverse",
-					limit = 5,
-					remark = "在目标范围按失血排序，遍历前5个",
+					remark = "在目标范围内筛选",
 				},
 				conditions = {
 					{

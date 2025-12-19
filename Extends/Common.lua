@@ -1620,8 +1620,7 @@ function OneMacroCommon:RegisterActions()
 					type = "string",
 					name = "内容",
 					default = "嗨！",
-					remark =
-					"支持插值：{PlayerName}、{PlayerHealth}、{PlayerMana}、{TargetName}、{TargetTargetName}、{FilterName}、{AssistName}、{SpellName}",
+					remark = "支持插值：{PlayerName}、{PlayerHealth}、{PlayerMana}、{TargetName}、{TargetTargetName}、{FilterName}、{AssistName}、{SpellName}",
 				},
 				type = {
 					type = "string",
@@ -1665,8 +1664,7 @@ function OneMacroCommon:RegisterActions()
 					type = "string",
 					name = "内容",
 					default = "嗨！",
-					remark =
-					"支持插值：{PlayerName}、{PlayerHealth}、{PlayerMana}、{TargetName}、{TargetTargetName}、{FilterName}、{AssistName}、{SpellName}",
+					remark = "支持插值：{PlayerName}、{PlayerHealth}、{PlayerMana}、{TargetName}、{TargetTargetName}、{FilterName}、{AssistName}、{SpellName}",
 				},
 				type = {
 					type = "string",

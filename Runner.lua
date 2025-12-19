@@ -104,8 +104,7 @@ function OneMacroRunner:CheckRule(config, weights, detects, rule)
 				success, unit = self:FilterUnits(config, weights, detects, conditions, filter, { "player" })
 			elseif scope == "target" then
 				-- 目标
-				success, unit = self:FilterUnits(config, weights, detects, conditions, filter,
-					{ "target", "targettarget" })
+				success, unit = self:FilterUnits(config, weights, detects, conditions, filter, { "target", "targettarget" })
 			end
 
 			-- 终止筛选
