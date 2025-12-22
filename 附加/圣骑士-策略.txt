@@ -169,6 +169,7 @@
 							detect = "Heal.CanHeal",
 							options = {
 								unit = "filter",
+								sight = false,
 							},
 						},
 						comparison = "=",
@@ -411,6 +412,7 @@
 							detect = "Heal.CanHeal",
 							options = {
 								unit = "filter",
+								sight = false,
 							},
 						},
 						comparison = "=",
@@ -473,6 +475,7 @@
 							detect = "Heal.CanHeal",
 							options = {
 								unit = "filter",
+								sight = false,
 							},
 						},
 						comparison = "=",
