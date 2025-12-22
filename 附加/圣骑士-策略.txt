@@ -522,6 +522,6 @@
 			},
 		},
 		remark = "近战奶骑一键奶",
-		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtle-wow.org/paladin?points=AoaAZQVQpAYoB--FoAAAI \n参考来源：https://www.bilibili.com/opus/1057761427555614745?from=search&spm_id_from=333.337.0.0",
+		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtlecraft.gg/paladin?points=AoaAZQVQpAYoB--FoAAAI \n参考来源：https://www.bilibili.com/opus/1057761427555614745?from=search&spm_id_from=333.337.0.0",
 	},
 }

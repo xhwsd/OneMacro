@@ -702,6 +702,6 @@
 			},
 		},
 		remark = "双手武器",
-		readme = "更新日期：2025-11-14 \n参考天赋：https://talents.turtle-wow.org/warrior?points=dQQAAYDQ-AoAooAAoRCFAB- \n参考来源：https://www.kdocs.cn/l/coRUAzUrhGw0",
+		readme = "更新日期：2025-11-14 \n参考天赋：https://talents.turtlecraft.gg/warrior?points=dQQAAYDQ-AoAooAAoRCFAB- \n参考来源：https://www.kdocs.cn/l/coRUAzUrhGw0",
 	},
 }

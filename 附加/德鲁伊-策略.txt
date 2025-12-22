@@ -375,7 +375,7 @@
 			},
 		},
 		remark = "熊德一键拉单个怪",
-		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtle-wow.org/viewtopic.php?t=943",
+		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtlecraft.gg/viewtopic.php?t=943",
 	},
 	{
 		name = "熊德拉群",
@@ -837,7 +837,7 @@
 			},
 		},
 		remark = "熊德一键拉多个怪",
-		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtle-wow.org/viewtopic.php?t=943",
+		readme = "更新日期：2025-10-17 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BSAaAI-FAYYRaDQQIFQB-Ao \n参考来源：https://luntan.turtlecraft.gg/viewtopic.php?t=943",
 	},
 	{
 		name = "树德奶所有",
@@ -1459,7 +1459,7 @@
 			},
 		},
 		remark = "树德一键奶所有",
-		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
 	},
 	{
 		name = "树德奶队伍",
@@ -1986,7 +1986,7 @@
 			},
 		},
 		remark = "树德一键奶队伍（所在）",
-		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
 	},
 	{
 		name = "树德奶名单",
@@ -2520,7 +2520,7 @@
 			},
 		},
 		remark = "树德一键奶名单和自己",
-		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
 	},
 	{
 		name = "树德奶目标",
@@ -3033,7 +3033,7 @@
 			},
 		},
 		remark = "树德一键奶目标（目标的目标）和自己",
-		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BhAbAKAY--FAAoBbFEAIFAB",
 	},
 	{
 		name = "鸟德",
@@ -3512,7 +3512,7 @@
 			},
 		},
 		remark = "鸟德一键输出",
-		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtle-wow.org/druid?points=oAaYYIFYBLFAB--FAAoAa \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030194253693696",
+		readme = "更新日期：2025-12-11 \n参考天赋：https://talents.turtlecraft.gg/druid?points=oAaYYIFYBLFAB--FAAoAa \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030194253693696",
 	},
 	{
 		name = "猫德",
@@ -4427,6 +4427,6 @@
 			},
 		},
 		remark = "猫德一键输出",
-		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtle-wow.org/druid?points=BSAaAI-EoADAaDSQIFQB-Ao \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030473292350208",
+		readme = "更新日期：2025-9-26 \n参考天赋：https://talents.turtlecraft.gg/druid?points=BSAaAI-EoADAaDSQIFQB-Ao \n参考来源：https://www.kookapp.cn/direct/anchor/5574114869722737/1993451221059869/88030473292350208",
 	},
 }
